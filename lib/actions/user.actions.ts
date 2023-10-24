@@ -13,7 +13,7 @@ interface Params{
     name:string,
     bio:string,
     image:string,
-    path:string
+    path:string;
 }
 export async function updateUser({
         userId,
@@ -32,7 +32,7 @@ export async function updateUser({
                 name,
                 bio,
                 image,
-                onboarded:true
+                onboarded:true,
             },
             {
                 upsert:true
@@ -114,6 +114,7 @@ export async function fetchUsers({
 
         const query:FilterQuery<typeof User>={
             id:{$ne:userId},
+            
         }
         if(searchString.trim() !== ''){
             query.$or=[
@@ -141,8 +142,9 @@ export async function fetchUsers({
 
 
 export async function getActivity(userId: string) {
+    connectToDB();
     try {
-      connectToDB();
+      
   
       // Find all threads created by the user
       const userThreads = await Thread.find({ author: userId });

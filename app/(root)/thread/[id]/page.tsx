@@ -15,6 +15,7 @@ const Page = async ({params}:{params:{id:string}}) => {
     if(!userInfo?.onboarded) redirect('/onboarding');
 
     const thread=await fetchThreadById(params.id);
+    
 return (
     <section className='relative'>
         <div>
@@ -28,6 +29,7 @@ return (
             community={thread.community}
             createdAt={thread.createdAt}
             comments={thread.children}
+            likes={thread.likes}
             />
         </div>
         <div className="mt-7">
@@ -35,6 +37,7 @@ return (
             threadId={thread.id}
             currentUserImg={userInfo.image}
             currentUserId={JSON.stringify(userInfo._id)}
+            likes={thread.likes}
             />
         </div>
         <div className="mt-10">
@@ -42,13 +45,14 @@ return (
                  <ThreadCard
                  key={childrenItem._id}
                  id={childrenItem._id}
-                 currentUserId={childrenItem.id || ''}
+                 currentUserId={JSON.stringify(childrenItem.id) || ''}
                  parentId={childrenItem.parentId}
                  content={childrenItem.text}
                  author={childrenItem.author}
                  community={childrenItem.community}
                  createdAt={childrenItem.createdAt}
                  comments={childrenItem.children}
+                 likes={childrenItem.likes}
                  isComment
                  />
             ))}

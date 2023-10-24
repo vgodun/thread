@@ -25,6 +25,7 @@ export default async function Home() {
                             community={post.community}
                             createdAt={post.createdAt}
                             comments={post.children}
+                            likes={post.likes}
                             />
                         ))}
                     </>

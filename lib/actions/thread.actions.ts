@@ -20,7 +20,7 @@ export async function createThread({text,author,communityId,path}:Params){
         const createdThread = await Thread.create({
             text,
             author,
-            community: null, // Assign communityId if provided, or leave it null for personal account
+            community: null,// Assign communityId if provided, or leave it null for personal account
         });
 
         //Update user model
@@ -73,7 +73,7 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
     return { posts, isNext };
 }
 
-export async function fetchThreadById(id:string){
+export async function fetchThreadById(id:string,){
     connectToDB();
 
     try {
@@ -83,7 +83,7 @@ export async function fetchThreadById(id:string){
         .populate({
             path: 'author',
             model: User,
-            select: '_id id name image',
+            select: '_id id name image ',
         })
         .populate({
             path: 'children',
@@ -91,7 +91,7 @@ export async function fetchThreadById(id:string){
                 {
                     path: 'author',
                     model: User,
-                    select: '_id id name parentId image'
+                    select: '_id id name parentId image '
                 },
                 {
                     path: 'children',
@@ -99,9 +99,9 @@ export async function fetchThreadById(id:string){
                     populate: {
                         path: 'author',
                         model: User,
-                        select: '_id id name parentId image'
+                        select: '_id id name parentId image '
                     }
-                }
+                },
             ]
         }).exec();
 
@@ -115,7 +115,7 @@ export async function addCommentToThread(
     threadId:string,
     commentText:string,
     userId:string,
-    path:string
+    path:string,
 ){
     connectToDB();
 
@@ -151,3 +151,35 @@ export async function addCommentToThread(
         throw new Error(`Failed to adding comment to thread: ${error.message}`);
     }
 }
+
+export async function likePost(postId: string, userId: string, likes: string[],path:string) {
+    connectToDB();
+    
+    try {
+        const thread = await Thread.findByIdAndUpdate(
+            postId,
+            {
+             userId:userId,
+             likes:likes
+            },
+            { new: true }
+          );
+          
+          if (userId && userId.trim() !== "") {
+          const indexToRemove = thread.likes.findIndex((like:any) => like === userId);
+          if ( indexToRemove !== -1) {
+            thread.likes.splice(indexToRemove, 1);
+          } else {
+            thread.likes.push(userId);
+          }
+        }
+        
+          const updatedThread = await thread.save();
+        
+      await updatedThread.save();
+      revalidatePath(path)
+      return updatedThread.likes
+    } catch (error: any) {
+      throw new Error(`Failed to add like to post: ${error.message}`);
+    }
+  }

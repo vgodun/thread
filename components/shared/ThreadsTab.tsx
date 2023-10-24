@@ -36,6 +36,7 @@ return (
              }
              createdAt={thread.createdAt}
              comments={thread.children}
+             likes={thread.likes}
            />
         ))}
     </section>

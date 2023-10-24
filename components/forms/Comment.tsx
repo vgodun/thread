@@ -23,8 +23,9 @@ interface Props {
     threadId: string;
     currentUserImg: string;
     currentUserId: string;
+    likes: string[];
 }
-const Comment = ({threadId,currentUserImg,currentUserId,}:Props) => {
+const Comment = ({threadId,currentUserImg,currentUserId,likes}:Props) => {
     const router = useRouter();
     const pathname = usePathname();
 
