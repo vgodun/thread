@@ -16,7 +16,6 @@ export default function LikesPosts({ threadId, userId, likes }: Props) {
     await likePost(threadId, userId, likes,pathname);
     route.refresh(); 
     }
-    console.log(likes);
     
     const isLiked = likes.includes(userId);
   return (

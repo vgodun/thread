@@ -1,19 +1,19 @@
 'use server';
 
-import {connectToDB} from "@/lib/mongoose";
+import { connectToDB } from "@/lib/mongoose";
 import Thread from "@/lib/models/thread.model";
 import User from '@/lib/models/user.model';
-import {revalidatePath} from "next/cache";
+import { revalidatePath } from "next/cache";
 
-interface Params{
-    text:string;
-    author:string;
-    communityId:string | null;
-    path:string;
+interface Params {
+    text: string;
+    author: string;
+    communityId: string | null;
+    path: string;
 }
 
-export async function createThread({text,author,communityId,path}:Params){
-    try{
+export async function createThread({ text, author, communityId, path }: Params) {
+    try {
         connectToDB();
 
         // @ts-ignore
@@ -34,7 +34,7 @@ export async function createThread({text,author,communityId,path}:Params){
     catch (error: any) {
         throw new Error(`Failed to create thread: ${error.message}`);
     };
-    
+
 }
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
@@ -73,65 +73,65 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
     return { posts, isNext };
 }
 
-export async function fetchThreadById(id:string,){
+export async function fetchThreadById(id: string,) {
     connectToDB();
 
     try {
-//TODO: Populate Community
+        //TODO: Populate Community
 
-        const thread= await Thread.findById(id)
-        .populate({
-            path: 'author',
-            model: User,
-            select: '_id id name image ',
-        })
-        .populate({
-            path: 'children',
-            populate:[
-                {
-                    path: 'author',
-                    model: User,
-                    select: '_id id name parentId image '
-                },
-                {
-                    path: 'children',
-                    model: Thread,
-                    populate: {
+        const thread = await Thread.findById(id)
+            .populate({
+                path: 'author',
+                model: User,
+                select: '_id id name image ',
+            })
+            .populate({
+                path: 'children',
+                populate: [
+                    {
                         path: 'author',
                         model: User,
                         select: '_id id name parentId image '
-                    }
-                },
-            ]
-        }).exec();
+                    },
+                    {
+                        path: 'children',
+                        model: Thread,
+                        populate: {
+                            path: 'author',
+                            model: User,
+                            select: '_id id name parentId image '
+                        }
+                    },
+                ]
+            }).exec();
 
         return thread;
-    } catch (error:any) {
+    } catch (error: any) {
         throw new Error(`Failed to fetch thread: ${error.message}`);
     }
 }
 
 export async function addCommentToThread(
-    threadId:string,
-    commentText:string,
-    userId:string,
-    path:string,
-){
+    threadId: string,
+    commentText: string,
+    userId: string,
+    path: string,
+) {
     connectToDB();
 
-    try{
+    try {
         //Find the original thread by its ID
 
         const originalThread = await Thread.findById(threadId);
 
-        if(!originalThread){
+        if (!originalThread) {
             throw new Error('Thread not found');
         }
         //Create a new thread with the comment text
 
-        const commentThread= new Thread({
+        const commentThread = new Thread({
             text: commentText,
-            author:userId,
+            author: userId,
             parentId: threadId,
         });
 
@@ -147,39 +147,39 @@ export async function addCommentToThread(
 
         revalidatePath(path);
     }
-    catch(error:any){
+    catch (error: any) {
         throw new Error(`Failed to adding comment to thread: ${error.message}`);
     }
 }
 
-export async function likePost(postId: string, userId: string, likes: string[],path:string) {
+export async function likePost(postId: string, userId: string, likes: string[], path: string) {
     connectToDB();
-    
+
     try {
         const thread = await Thread.findByIdAndUpdate(
             postId,
             {
-             userId:userId,
-             likes:likes
+                userId: userId,
+                likes: likes
             },
             { new: true }
-          );
-          
-          if (userId && userId.trim() !== "") {
-          const indexToRemove = thread.likes.findIndex((like:any) => like === userId);
-          if ( indexToRemove !== -1) {
-            thread.likes.splice(indexToRemove, 1);
-          } else {
-            thread.likes.push(userId);
-          }
+        );
+
+        if (userId && userId.trim() !== "") {
+            const indexToRemove = thread.likes.findIndex((like: any) => like === userId);
+            if (indexToRemove !== -1) {
+                thread.likes.splice(indexToRemove, 1);
+            } else {
+                thread.likes.push(userId);
+            }
         }
-        
-          const updatedThread = await thread.save();
-        
-      await updatedThread.save();
-      revalidatePath(path)
-      return updatedThread.likes
+
+        const updatedThread = await thread.save();
+
+        await updatedThread.save();
+        revalidatePath(path)
+        return updatedThread.likes
     } catch (error: any) {
-      throw new Error(`Failed to add like to post: ${error.message}`);
+        throw new Error(`Failed to add like to post: ${error.message}`);
     }
-  }
+}
