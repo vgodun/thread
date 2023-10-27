@@ -145,9 +145,11 @@ const ThreadCard = ({
                 )}
                 {!isComment && likes.length && (
                   <div className="likes-container">
+                    <Link href={`/likesUsers/${id}`}>
                     <p className="mt-1 text-subtle-medium text-gray-1">
                       {likes.length} likes
                     </p>
+                    </Link>
                   </div>
                 )}
 
