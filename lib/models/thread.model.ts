@@ -29,7 +29,7 @@ const threadSchema = new mongoose.Schema({
   ],
   likes: [
     {
-      type: String,
+      type: Object,
     },
   ],
 });

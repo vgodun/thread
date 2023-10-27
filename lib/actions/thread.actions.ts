@@ -161,6 +161,7 @@ export async function likePost(
   path: string
 ) {
   connectToDB();
+console.log();
 
   try {
     //Find the thread by its ID
