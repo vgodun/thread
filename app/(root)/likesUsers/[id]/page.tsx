@@ -1,12 +1,11 @@
 import ThreadCard from "@/components/cards/ThreadCard";
-import Image from "next/image";
 import { fetchThreadById } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import LikesUsers from "@/components/shared/LieksUsers";
+import LikesUsers from "@/components/shared/LikesUsers";
 
-const Page = async ({ params }: { params: { id: string } }) => {
+const Page = async ({ params }: { params: { id: any } }) => {
     if (!params.id) return null;
 
     const user = await currentUser();
@@ -32,15 +31,18 @@ const Page = async ({ params }: { params: { id: string } }) => {
                     createdAt={thread.createdAt}
                     comments={thread.children}
                     likes={thread.likes}
+                    name={userInfo?.name}
+                    username={userInfo.username}
+                    imgUrl={userInfo?.image || ''}
                 />
             </div>
             <div className="flex flex-row">
                 <LikesUsers
                     id={user?.id || ''}
-                    name={userInfo?.name}
-                    username={userInfo?.username}
-                    imgUrl={userInfo?.image}
                     likes={thread.likes}
+                    name={userInfo?.name}
+                    username={userInfo.username}
+                    imgUrl={userInfo?.image || ''}
                 />
                 {/* {thread.likes.map((like:any)=>(
                 <div className="text-light-1">

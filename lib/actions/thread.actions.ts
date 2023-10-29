@@ -158,39 +158,53 @@ export async function likePost(
   postId: string,
   userId: string,
   likes: string[],
-  path: string
+  path: string,
+  name: any,
+  username: any,
+  image: any
 ) {
   connectToDB();
-console.log();
+
+  const getInfoLikes = {
+    id: userId,
+    name: name,
+    username: username,
+    image: image,
+  };
 
   try {
-    //Find the thread by its ID
+    // Find the thread by its ID
     const thread = await Thread.findById(postId);
 
     if (!thread) {
       throw new Error("Thread not found");
     }
 
-    //Check if the user has already liked the post
+    // Check if the user has already liked the post
     if (userId && userId.trim() !== "") {
-      //If the user has already liked the post, remove the like
-      if (thread.likes.includes(userId.toString())) {
-        //Remove the like from the array
+      // If the user has already liked the post, remove the like
+      if (thread.likes.some((like:any) => like.id === getInfoLikes.id)) {
+        // Remove the like from the array
         thread.likes = thread.likes.filter(
-          (existingUserId: string) => existingUserId !== userId
+          (existingLike:any) => existingLike.id !== userId
         );
       } else {
-        //If the user has not liked the post, add the like
-        thread.likes.push(userId.toString());
+        // If the user has not liked the post, add the like
+        thread.likes.push(getInfoLikes);
       }
     }
 
-    //Save the thread
+    // Save the thread
     const updatedThread = await thread.save();
 
     revalidatePath(path);
+
+    // Determine if the user has liked the post after the update
+    // const isLiked = thread.likes.some((like:any) => like.id === userId);
+
+    // return { likes: updatedThread.likes, isLiked };
     return updatedThread.likes;
   } catch (error: any) {
-    throw new Error(`Failed to add like to post: ${error.message}`);
+    throw new Error(`Failed to add or remove like from the post: ${error.message}`);
   }
 }
