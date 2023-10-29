@@ -7,17 +7,19 @@ interface Props {
   threadId: string;
   userId: any;
   likes: string[];
+  name: any;
+  username: any;
+  imgUrl: any;
 }
 
-export default function LikesPosts({ threadId, userId, likes }: Props) {
+export default function LikesPosts({ threadId, userId, likes,name,username,imgUrl }: Props) {
   const route = useRouter();
   const pathname = usePathname();
   const handleLikeClick = async () => {
-    await likePost(threadId, userId, likes, pathname);
+    await likePost(threadId, userId, likes, pathname,name,username,imgUrl);
     route.refresh();
   };
-
-  const isLiked = likes.includes(userId);
+  const isLiked = likes.some((like: any) => like.id === userId);
   return (
     <div onClick={handleLikeClick}>
       <Image

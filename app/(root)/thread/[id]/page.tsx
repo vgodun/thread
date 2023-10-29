@@ -1,5 +1,6 @@
 import ThreadCard from "@/components/cards/ThreadCard";
 import Comment from "@/components/forms/Comment";
+import LikesUsers from "@/components/shared/LikesUsers";
 import { fetchThreadById } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
@@ -30,6 +31,9 @@ return (
             createdAt={thread.createdAt}
             comments={thread.children}
             likes={thread.likes}
+            name={userInfo?.name}
+            username={userInfo.username}
+            imgUrl={userInfo?.image || ''}
             />
         </div>
         <div className="mt-7">
@@ -53,6 +57,9 @@ return (
                  createdAt={childrenItem.createdAt}
                  comments={childrenItem.children}
                  likes={childrenItem.likes}
+                 name={userInfo?.name}
+                 username={userInfo.username}
+                 imgUrl={userInfo?.image || ''}
                  isComment
                  />
             ))}

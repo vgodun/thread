@@ -8,24 +8,27 @@ interface Props {
   parentId: string | null;
   content: string;
   author: {
-    name: string;
+    name:any;
     image: string;
     id: string;
   };
   community: {
     id: string;
-    name: string;
+    name:any;
     image: string;
   } | null;
   createdAt: string;
   comments: {
     author: {
       image: string;
-      name: string;
+      name:any;
     };
   }[];
   isComment?: boolean;
   likes: string[];
+  name?: any;
+  username?: any;
+  imgUrl?: any;
 }
 const ThreadCard = ({
   id,
@@ -38,7 +41,11 @@ const ThreadCard = ({
   comments,
   isComment,
   likes,
+  name,
+  username,
+  imgUrl,
 }: Props) => {
+  
   return (
     <article
       className={`flex w-full flex-col rounded-xl ${
@@ -85,6 +92,9 @@ const ThreadCard = ({
                   threadId={id}
                   userId={currentUserId}
                   likes={likes}
+                  name={name}
+                  username={username}
+                  imgUrl={imgUrl}
                 />
                 <Link href={`/thread/${id}`}>
                   <Image
@@ -110,29 +120,20 @@ const ThreadCard = ({
                   className="cursor-pointer object-contain"
                 />
               </div>
-              {/* {
-                            isComment && comments.length > 0 && (
-                                <div className="flex flex-row">
-                                    <Link href={`/thread/${id}`}>
-                                    <p className='mt-1 text-subtle-medium text-gray-1 w-20'>{comments.length} replies</p>
-                                </Link>
-                                <p className="mt-1 text-subtle-medium text-gray-1">{likes.length} likes</p>
-                                </div>
-                            )
-                        } */}
               <div className="flex flex-row">
                 {isComment && comments.length > 0 && (
                   <div className="likes-container">
-                    {/* <p className="mt-1 text-subtle-medium text-gray-1 w-20">{likes.length} likes</p> */}
                     <p className="mt-1 text-subtle-medium text-gray-1 w-20 ">
                       {comments.length} replies
                     </p>
                   </div>
                 )}
                 {isComment && likes.length > 0 && (
+                  <Link href={`/likesUsers/${id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">
                     {likes.length} likes
                   </p>
+                  </Link>
                 )}
                 {!isComment && comments.length && (
                   <div className="likes-container pl-2.5">
@@ -152,10 +153,6 @@ const ThreadCard = ({
                     </Link>
                   </div>
                 )}
-
-                {/* <Link href={`/thread/${id}`}>
-                                    <p className="mt-1 text-subtle-medium text-gray-1 w-20">{comments.length} replies</p>
-                                </Link> */}
               </div>
             </div>
           </div>

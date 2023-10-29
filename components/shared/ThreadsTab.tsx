@@ -5,8 +5,11 @@ interface Props{
     currentUserId: string;
     accountId: string;
     accountType: string;
+    name: any;
+    username: any;
+    imgUrl: any;
 }
-const ThreadsTab = async ({currentUserId, accountId, accountType}:Props) => {
+const ThreadsTab = async ({currentUserId, accountId, accountType,name,username,imgUrl}:Props) => {
     let result= await fetchUserPosts(accountId);
 
 return (
@@ -35,6 +38,9 @@ return (
              createdAt={thread.createdAt}
              comments={thread.children}
              likes={thread.likes}
+             name={name}
+              username={username}
+              imgUrl={imgUrl}
            />
         ))}
     </section>

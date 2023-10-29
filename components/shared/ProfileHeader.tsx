@@ -4,9 +4,9 @@ import Image from "next/image";
 interface Props {
     accountId: string;
     authUserId: string;
-    name: string;
-    username: string;
-    imgUrl: string;
+    name:any;
+    username:any;
+    imgUrl: any;
     bio: string;
     type?: string;
 }
