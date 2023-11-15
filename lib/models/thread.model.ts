@@ -32,6 +32,7 @@ const threadSchema = new mongoose.Schema({
       type: Object,
     },
   ],
+  imgPosts:String,
 });
 
 const Thread = mongoose.models.Thread || mongoose.model("Thread", threadSchema);

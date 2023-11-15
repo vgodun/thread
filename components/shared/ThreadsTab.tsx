@@ -41,6 +41,7 @@ return (
              name={name}
               username={username}
               imgUrl={imgUrl}
+              imgPosts={thread.imgPosts}
            />
         ))}
     </section>

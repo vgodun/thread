@@ -2,8 +2,10 @@
 const nextConfig = {
     experimental: {
       serverActions: true,
+      serverActionsBodySizeLimit: "500mb",
       serverComponentsExternalPackages: ["mongoose"],
     },
+  
     eslint: {
       // Warning: This allows production builds to successfully complete even if
       // your project has ESLint errors.
@@ -32,6 +34,11 @@ const nextConfig = {
           hostname:"utfs.io"
         }
       ],
+    },
+    api: {
+      bodyParser: {
+        sizeLimit: '10mb',
+      },
     },
   };
   
