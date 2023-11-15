@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import LikesPosts from "../shared/LikesPosts";
+import ModalImage from "../shared/ModalImage";
 
 interface Props {
   id: string;
@@ -29,6 +30,7 @@ interface Props {
   name?: any;
   username?: any;
   imgUrl?: any;
+  imgPosts?: any;
 }
 const ThreadCard = ({
   id,
@@ -44,6 +46,7 @@ const ThreadCard = ({
   name,
   username,
   imgUrl,
+  imgPosts
 }: Props) => {
   
   return (
@@ -85,9 +88,17 @@ const ThreadCard = ({
                 {author.name}
               </h4>
             </Link>
-            <p className="mt-2 text-small-regular text-light-2">{content}</p>
+            <p className="mt-2 text-small-regular text-light-2 mb-4">{content}</p>
+            { imgPosts &&(
+              <ModalImage imgPosts={imgPosts} />
+            )
+            } 
+            
+            
+
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className="flex gap-3.5">
+                
                 <LikesPosts
                   threadId={id}
                   userId={currentUserId}

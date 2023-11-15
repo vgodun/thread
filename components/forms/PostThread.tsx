@@ -19,6 +19,9 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { ThreadValidation } from "@/lib/validations/thread";
 import { createThread } from "@/lib/actions/thread.actions";
+import Image from "next/image";
+import { Input } from "../ui/input";
+import { ChangeEvent, useState } from "react";
 
 interface Props {
     userId: string;
@@ -27,6 +30,7 @@ interface Props {
 function PostThread({ userId }: Props) {
     const router = useRouter();
     const pathname = usePathname();
+    const [files, setFiles] = useState<File[]>([]);
 
     const { organization } = useOrganization();
 
@@ -37,17 +41,37 @@ function PostThread({ userId }: Props) {
             accountId: userId,
         },
     });
+    console.log(files);
 
     const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
+
         await createThread({
             text: values.thread,
             author: userId,
             communityId: organization ? organization.id : null,
             path: pathname,
+            imgPosts: values.imgPosts
         });
 
         router.push("/");
     };
+    const handleImage = (e: ChangeEvent<HTMLInputElement>, fieldChange: (value: string) => void) => {
+        e.preventDefault();
+        const fileReader = new FileReader();
+
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+            setFiles(Array.from(e.target.files));
+            if (!file.type.includes('image')) return;
+            fileReader.onload = async (e) => {
+                const imageDataUrl = e.target?.result?.toString() || '';
+                fieldChange(imageDataUrl);
+            }
+            fileReader.readAsDataURL(file);
+        }
+
+    }
+
 
     return (
         <Form {...form}>
@@ -64,12 +88,47 @@ function PostThread({ userId }: Props) {
                                 Content
                             </FormLabel>
                             <FormControl className='no-focus border border-dark-4 bg-dark-3 text-light-1'>
-                                <Textarea rows={15} {...field} />
+                                <Textarea rows={5} {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+                <FormField
+                    control={form.control}
+                    name="imgPosts"
+                    render={({ field }) => (
+                        <FormItem className='flex items-center gap-4'>
+                            <FormLabel className='w-62 h-62 '>
+                                {field.value ? (
+                                    <Image
+                                        src={field.value}
+                                        alt='profile photo'
+                                        width={1000}
+                                        height={1000}
+                                    />
+                                ) : (
+                                    <Image
+                                        src='/assets/profile.svg'
+                                        alt='profile photo'
+                                        width={24}
+                                        height={24}
+                                        className='flex h-24 w-24 items-center justify-center rounded-full bg-dark-4 !important'
+                                    />
+                                )}
+                            </FormLabel>
+                            <FormControl className='flex flex-col flex-1 text-base-semibold text-gray-200 '>
+                                <Input
+                                    type='file'
+                                    accept="image/*"
+                                    className='hidden'
+                                    onChange={(e) => handleImage(e, field.onChange)}
+                                />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+
 
                 <Button type='submit' className='bg-primary-500'>
                     Post Thread
