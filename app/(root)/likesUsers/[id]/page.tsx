@@ -27,14 +27,12 @@ const Page = async ({ params }: { params: { id: any } }) => {
                     parentId={thread.parentId}
                     content={thread.text}
                     author={thread.author}
-                    community={thread.community}
                     createdAt={thread.createdAt}
                     comments={thread.children}
                     likes={thread.likes}
                     name={userInfo?.name}
                     username={userInfo.username}
-                    imgUrl={userInfo?.image || ''}
-                />
+                    imgUrl={userInfo?.image || ''} />
             </div>
             <div className="flex flex-row">
                 <LikesUsers
