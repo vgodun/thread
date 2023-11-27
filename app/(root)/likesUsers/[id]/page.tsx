@@ -32,7 +32,8 @@ const Page = async ({ params }: { params: { id: any } }) => {
                     likes={thread.likes}
                     name={userInfo?.name}
                     username={userInfo.username}
-                    imgUrl={userInfo?.image || ''} />
+                    imgUrl={userInfo?.image || ''} 
+                    isComment />
             </div>
             <div className="flex flex-row">
                 <LikesUsers
@@ -42,11 +43,6 @@ const Page = async ({ params }: { params: { id: any } }) => {
                     username={userInfo.username}
                     imgUrl={userInfo?.image || ''}
                 />
-                {/* {thread.likes.map((like:any)=>(
-                <div className="text-light-1">
-                    
-                </div>
-            ))} */}
             </div>
         </section>
     )

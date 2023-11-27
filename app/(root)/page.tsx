@@ -36,6 +36,7 @@ export default async function Home() {
                             username={userInfo.username}
                             imgUrl={userInfo?.image || ''}
                             imgPosts={post.imgPosts}
+                            isComment
                             />
                         ))}
                     </>

@@ -21,19 +21,19 @@ return (
     <section className='relative'>
         <div>
         <ThreadCard
-            key={thread._id}
-            id={thread._id}
-            currentUserId={user?.id || ''}
-            parentId={thread.parentId}
-            content={thread.text}
-            author={thread.author}
-            createdAt={thread.createdAt}
-            comments={thread.children}
-            likes={thread.likes}
-            name={userInfo?.name}
-            username={userInfo.username}
-            imgUrl={userInfo?.image || ''}
-            />
+                    key={thread._id}
+                    id={thread._id}
+                    currentUserId={user?.id || ''}
+                    parentId={thread.parentId}
+                    content={thread.text}
+                    author={thread.author}
+                    createdAt={thread.createdAt}
+                    comments={thread.children}
+                    likes={thread.likes}
+                    name={userInfo?.name}
+                    username={userInfo.username}
+                    imgUrl={userInfo?.image || ''} 
+                    isComment />
         </div>
         <div className="mt-7">
             <Comment 
