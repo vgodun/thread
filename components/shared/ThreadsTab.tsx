@@ -37,6 +37,7 @@ return (
               username={username}
               imgUrl={imgUrl}
               imgPosts={thread.imgPosts}
+                isComment
            />
         ))}
     </section>
