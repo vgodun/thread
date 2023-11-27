@@ -27,7 +27,6 @@ return (
             parentId={thread.parentId}
             content={thread.text}
             author={thread.author}
-            community={thread.community}
             createdAt={thread.createdAt}
             comments={thread.children}
             likes={thread.likes}
@@ -53,7 +52,6 @@ return (
                  parentId={childrenItem.parentId}
                  content={childrenItem.text}
                  author={childrenItem.author}
-                 community={childrenItem.community}
                  createdAt={childrenItem.createdAt}
                  comments={childrenItem.children}
                  likes={childrenItem.likes}
