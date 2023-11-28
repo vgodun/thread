@@ -21,7 +21,7 @@ interface Props {
     };
   }[];
   isComment: boolean;
-    likes: string[];
+  likes: string[];
   name?: any;
   username?: any;
   imgUrl?: any;
@@ -44,13 +44,12 @@ function ThreadCard({
   imgPosts
 }: Props) {
   return (
-    
+
     <article
-      className={`flex w-full flex-col rounded-xl ${
-        isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
-      }`}
+      className={`flex w-full flex-col rounded-xl ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
+        }`}
     >
-      
+
       <div className='flex items-start justify-between'>
         <div className='flex w-full flex-1 flex-row gap-4'>
           <div className='flex flex-col items-center'>
@@ -74,17 +73,17 @@ function ThreadCard({
             <p className='mt-2 text-small-regular text-light-2'>{content}</p>
             {imgPosts && (
               <Image
-                    src={imgPosts}
-                    alt='heart'
-                    width={350}
-                    height={350}
-                    className='cursor-pointer object-contain'
-                  />
+                src={imgPosts}
+                alt='heart'
+                width={350}
+                height={350}
+                className='cursor-pointer object-contain'
+              />
             )}
-            
+
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className='flex gap-3.5'>
-              <LikesPosts
+                <LikesPosts
                   threadId={id}
                   userId={currentUserId}
                   likes={likes}
@@ -116,13 +115,42 @@ function ThreadCard({
                   className='cursor-pointer object-contain'
                 />
               </div>
-              {isComment && comments.length > 0 && (
-                <Link href={`/thread/${id}`}>
-                  <p className='mt-1 text-subtle-medium text-gray-1'>
-                    {comments.length} repl{comments.length > 1 ? "ies" : "y"}
-                  </p>
+              {
+                isComment || likes.length > 0 && (
+                  <div className="flex flex-row">
+                    <Link href={`/thread/${id}`}>
+                      <p className='mt-1 text-subtle-medium text-gray-1'>
+                        {comments.length} repl{comments.length > 1 ? "ies" : "y"}
+                      </p>
+                    </Link>
+                    <Link href={`/likesUsers/${id}`}>
+                      <p className="mt-1 text-subtle-medium text-gray-1">
+                        {likes.length} lik{likes.length > 1 ? "es" : "e"}
+                      </p>
+                    </Link>
+                  </div>
+                )
+              }
+              <div className="flex gap-3.5">
+                {
+                 <Link href={`/thread/${id}`}>
+                 {comments.length === 0 ? null : (
+                   <p className='mt-1 text-subtle-medium text-gray-1'>
+                     {comments.length} repl{comments.length > 1 ? "ies" : "y"}
+                   </p>
+                 )}
                 </Link>
-              )}
+                }
+                {
+                  <Link href={`/likesUsers/${id}`}>
+                    {likes.length === 0 ? null : (
+                  <p className="mt-1 text-subtle-medium text-gray-1">
+                    {likes.length} lik{likes.length > 1 ? "es" : "e"}
+                  </p>
+                    )}
+                </Link>
+                }
+              </div>
             </div>
           </div>
         </div>
@@ -135,7 +163,7 @@ function ThreadCard({
         />
       </div>
 
-      {!isComment && (
+      {isComment && (
         <div className='ml-1 mt-3 flex flex-row items-center gap-2'>
           {comments.slice(0, 2).map((comment, index) => (
             <Image
@@ -147,29 +175,13 @@ function ThreadCard({
               className={`${index !== 0 && "-ml-5"} rounded-full object-cover`}
             />
           ))}
-
-          <Link href={`/thread/${id}`}>
-            {comments.length===0?null:(
-              <p className='mt-1 text-subtle-medium text-gray-1'>
-              {comments.length} repl{comments.length > 1 ? "ies" : "y"}
-            </p>
-            )}
-            
-          </Link>
-          <Link href={`/likesUsers/${id}`}>
-            {likes.length===0?null:(
-              <p className="mt-1 text-subtle-medium text-gray-1">
-                      {likes.length} lik{likes.length > 1 ? "es" : "e"}
-                    </p>
-            )}
-                    
-                    </Link>
         </div>
       )}
+
       <div className="py-3">
-      <p className='text-subtle-medium text-gray-1'>
-            {formatDateString(createdAt)}
-          </p>
+        <p className='text-subtle-medium text-gray-1'>
+          {formatDateString(createdAt)}
+        </p>
       </div>
     </article>
   );
