@@ -120,4 +120,3 @@ export {
   DialogTitle,
   DialogDescription,
 }
-// max-w-full w-6/12 h-auto
