@@ -35,7 +35,6 @@ async function Page({ params }: { params: { id: string } }) {
           <TabsList className='tab'>
             {profileTabs.map((tab) => (
               <TabsTrigger key={tab.label} value={tab.value} className='tab'>
-                {/* <ModalAuthorImg imgUrl={tab.icon} alt={tab.value}/> */}
                 <Image
                   src={tab.icon}
                   alt={tab.label}

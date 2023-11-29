@@ -11,7 +11,6 @@ import {
 
 interface Props {
     imgUrl: string;
-    imgUrl: any;
 }
 
 const Modal = ({imgUrl}:Props) => {
