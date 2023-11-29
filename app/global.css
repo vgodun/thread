@@ -108,7 +108,6 @@
         background: #7878a3;
     }
 }
-
 /* Clerk Responsive fix */
 .cl-organizationSwitcherTrigger .cl-userPreview .cl-userPreviewTextContainer {
     @apply max-sm:hidden;
