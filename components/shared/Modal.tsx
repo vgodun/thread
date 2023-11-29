@@ -11,6 +11,7 @@ import {
 
 interface Props {
     imgUrl: string;
+    imgUrl: any;
 }
 
 const Modal = ({imgUrl}:Props) => {
@@ -37,5 +38,6 @@ const Modal = ({imgUrl}:Props) => {
       </Dialog>
     )
 }
+
 
 export default Modal;
