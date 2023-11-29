@@ -3,6 +3,7 @@ import Link from "next/link";
 import DeleteThread from "../forms/DeleteThread";
 import LikesPosts from "../shared/LikesPosts";
 import { formatDateString } from "@/lib/utils";
+import Modal from "../shared/Modal";
 
 interface Props {
   id: string;
@@ -72,13 +73,7 @@ function ThreadCard({
             </Link>
             <p className='mt-2 text-small-regular text-light-2'>{content}</p>
             {imgPosts && (
-              <Image
-                src={imgPosts}
-                alt='heart'
-                width={350}
-                height={350}
-                className='cursor-pointer object-contain'
-              />
+              <Modal imgUrl={imgPosts} />
             )}
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
