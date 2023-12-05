@@ -13,10 +13,8 @@ async function Home({
     searchParams: { [key: string]: string | undefined };
 }) {
     const user = await currentUser();
-    if (!user) return null;
 
-    const userInfo = await fetchUser(user.id);
-    if (!userInfo?.onboarded) redirect("/onboarding");
+    const userInfo = await fetchUser(user?.id || '');
 
     const result = await fetchPosts(
         searchParams.page ? +searchParams.page : 1,
@@ -43,8 +41,8 @@ async function Home({
                                 comments={post.children}
                                 likes={post.likes}
                                 name={userInfo?.name}
-                                username={userInfo.username}
-                                imgUrl={userInfo?.image || ''}
+                                username={userInfo?.username}
+                                imgUrl={userInfo?.image}
                                 imgPosts={post.imgPosts}
                                 isComment
                             />

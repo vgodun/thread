@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import LikesUsers from "@/components/shared/LikesUsers";
 
 const Page = async ({ params }: { params: { id: any } }) => {
-    if (!params.id) return null;
+    if (!params.id) return redirect('/sign-in');
 
     const user = await currentUser();
     if (!user) return null;
@@ -39,9 +39,6 @@ const Page = async ({ params }: { params: { id: any } }) => {
                 <LikesUsers
                     id={user?.id || ''}
                     likes={thread.likes}
-                    name={userInfo?.name}
-                    username={userInfo.username}
-                    imgUrl={userInfo?.image || ''}
                 />
             </div>
         </section>

@@ -88,7 +88,8 @@ const pathname=usePathname();
             router.back();
         }
         else {
-            router.push('/');
+            router.push(`/profile/${user.id}`);
+            router.refresh();
         }
     }
 

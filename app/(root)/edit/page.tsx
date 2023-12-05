@@ -10,7 +10,7 @@ export default async function page(){
 
 
     const userInfo = await fetchUser(user.id);
-    if (userInfo?.onboarded) redirect("/");
+    if (userInfo?.onboarded) redirect(`/profile/edit/${user.id}`);
 
 
     const userData={
