@@ -110,41 +110,7 @@ function ThreadCard({
                   className='cursor-pointer object-contain'
                 />
               </div>
-              {
-                isComment || likes.length > 0 && (
-                  <div className="flex flex-row">
-                    <Link href={`/thread/${id}`}>
-                      <p className='mt-1 text-subtle-medium text-gray-1'>
-                        {comments.length} repl{comments.length > 1 ? "ies" : "y"}
-                      </p>
-                    </Link>
-                    <Link href={`/likesUsers/${id}`}>
-                      <p className="mt-1 text-subtle-medium text-gray-1">
-                        {likes.length} lik{likes.length > 1 ? "es" : "e"}
-                      </p>
-                    </Link>
-                  </div>
-                )
-              }
-              <div className="flex gap-3.5">
-                {
-                 <Link href={`/thread/${id}`}>
-                 {comments.length === 0 ? null : (
-                   <p className='mt-1 text-subtle-medium text-gray-1'>
-                     {comments.length} repl{comments.length > 1 ? "ies" : "y"}
-                   </p>
-                 )}
-                </Link>
-                }
-                {
-                  <Link href={`/likesUsers/${id}`}>
-                    {likes.length === 0 ? null : (
-                  <p className="mt-1 text-subtle-medium text-gray-1">
-                    {likes.length} lik{likes.length > 1 ? "es" : "e"}
-                  </p>
-                    )}
-                </Link>
-                }
+              <div className="flex gap-3.5 justify-center item">
               </div>
             </div>
           </div>
@@ -157,21 +123,41 @@ function ThreadCard({
           isComment={isComment}
         />
       </div>
+      <div className="flex flex-row items-center">
+        {isComment && (
+          <div className='ml-1 mt-3 flex flex-row items-center gap-2'>
+            {comments.slice(0, 2).map((comment, index) => (
+              <Image
+                key={index}
+                src={comment.author.image}
+                alt={`user_${index}`}
+                width={24}
+                height={24}
+                className={`${index !== 0 && "-ml-5"} rounded-full object-cover`}
+              />
+            ))}
+          </div>
+        )}
+        {
+          <Link href={`/thread/${id}`} className="mt-3 px-3">
+            {comments.length === 0 ? null : (
+              <p className='mt-1 text-subtle-medium text-gray-1'>
+                {comments.length} repl{comments.length > 1 ? "ies" : "y"}
+              </p>
+            )}
+          </Link>
+        }
+        {
+          <Link href={`/likesUsers/${id}`} className="mt-3">
+            {likes.length === 0 ? null : (
+              <p className="mt-1 text-subtle-medium text-gray-1">
+                {likes.length} lik{likes.length > 1 ? "es" : "e"}
+              </p>
+            )}
+          </Link>
+        }
 
-      {isComment && (
-        <div className='ml-1 mt-3 flex flex-row items-center gap-2'>
-          {comments.slice(0, 2).map((comment, index) => (
-            <Image
-              key={index}
-              src={comment.author.image}
-              alt={`user_${index}`}
-              width={24}
-              height={24}
-              className={`${index !== 0 && "-ml-5"} rounded-full object-cover`}
-            />
-          ))}
-        </div>
-      )}
+      </div>
 
       <div className="py-3">
         <p className='text-subtle-medium text-gray-1'>
