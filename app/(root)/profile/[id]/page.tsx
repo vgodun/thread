@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
-import ModalAuthorImg from "../../../../components/shared/ModalAuthorImg";
+import RepliesTab from "@/components/shared/RepliesTab";
 
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
@@ -49,10 +49,16 @@ async function Page({ params }: { params: { id: string } }) {
                     {userInfo.threads.length}
                   </p>
                 )}
+                {tab.label === "Replies" && (
+                  <p className='ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2'>
+                    {userInfo.threads.length}
+                  </p>
+                )}
               </TabsTrigger>
             ))}
           </TabsList>
           {profileTabs.map((tab) => (
+            <>
             <TabsContent
               key={`content-${tab.label}`}
               value={tab.value}
@@ -67,10 +73,28 @@ async function Page({ params }: { params: { id: string } }) {
                 username={userInfo.username}
                 imgUrl={userInfo.image}
               />
+              {
+                tab.label === "Replies" && (
+                  <>
+                  <RepliesTab 
+                  currentUserId={user.id}
+                  accountId={userInfo.id}
+                  accountType='User'
+                  name={userInfo.name}
+                  username={userInfo.username}
+                  imgUrl={userInfo.image}
+                  />
+                  <p className="text-light-1">2</p>
+                  </>
+                )
+              }
+             
             </TabsContent>
+            </>
           ))}
         </Tabs>
       </div>
+      
     </section>
   );
 }
