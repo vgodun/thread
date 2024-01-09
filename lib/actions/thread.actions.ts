@@ -9,7 +9,7 @@ interface Params {
   text: string;
   author: string;
   path: string;
-  imgPosts: string;
+  imgPosts: any;
 }
 
 export async function createThread({
