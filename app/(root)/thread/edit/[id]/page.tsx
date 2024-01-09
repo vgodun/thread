@@ -1,10 +1,11 @@
 import AccountProfile from "@/components/forms/AccountProfile";
 import { redirect } from "next/navigation";
 import React from "react";
-import {currentUser} from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { fetchPosts, fetchThreadById } from "@/lib/actions/thread.actions";
 import ThreadEdit from "@/components/forms/ThreadEdit";
+
 
 export default async function page({params}:{params:{id:string}}){
     const user = await currentUser();
@@ -14,6 +15,7 @@ export default async function page({params}:{params:{id:string}}){
     const userInfo = await fetchUser(user.id);
     // if (userInfo?.onboarded) redirect("/");
     const thread=await fetchThreadById(params.id);
+
 
 
     const userData={
