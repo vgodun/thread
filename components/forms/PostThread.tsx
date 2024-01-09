@@ -32,8 +32,6 @@ function PostThread({ userId }: Props) {
     const pathname = usePathname();
     const [files, setFiles] = useState<File[]>([]);
 
-    const { organization } = useOrganization();
-
     const form = useForm<z.infer<typeof ThreadValidation>>({
         resolver: zodResolver(ThreadValidation),
         defaultValues: {
