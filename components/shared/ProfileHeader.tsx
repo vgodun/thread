@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import ModalAuthorImg from "./ModalAuthorImg";
+import ModalAuthorImg from "@/components/shared/ModalAuthorImg";
 
 interface Props {
     accountId: string;
@@ -23,6 +23,7 @@ function ProfileHeader({
     bio,
     type,
 }: Props) {
+
     const path = usePathname();
     return (
         <div className='flex w-full flex-col justify-start'>

@@ -32,7 +32,7 @@ const Page = async ({ params }: { params: { id: any } }) => {
                     likes={thread.likes}
                     name={userInfo?.name}
                     username={userInfo.username}
-                    imgUrl={userInfo?.image || ''} 
+                    imgUrl={userInfo?.image || ''}
                     isComment />
             </div>
             <div className="flex flex-row">
