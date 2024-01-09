@@ -42,7 +42,6 @@ function Topbar() {
                         </SignOutButton>
                     </SignedIn>
                 </div>
-
                 <OrganizationSwitcher
                     appearance={{
                         baseTheme: dark,
