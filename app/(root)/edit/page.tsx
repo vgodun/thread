@@ -1,10 +1,10 @@
 import AccountProfile from "@/components/forms/AccountProfile";
 import { redirect } from "next/navigation";
 import React from "react";
-import {currentUser} from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { fetchUser } from "@/lib/actions/user.actions";
 
-export default async function page(){
+export default async function page() {
     const user = await currentUser();
     if (!user) return null; // to avoid typescript warnings
 
@@ -13,12 +13,12 @@ export default async function page(){
     if (userInfo?.onboarded) redirect(`/profile/edit/${user.id}`);
 
 
-    const userData={
-        id:user?.id,
-        objectId:userInfo?._id,
-        username:userInfo?.username || user?.username,
-        name:userInfo?.name || user?.firstName || '',
-        bio:userInfo?.bio || '',
+    const userData = {
+        id: user?.id,
+        objectId: userInfo?._id,
+        username: userInfo?.username || user?.username,
+        name: userInfo?.name || user?.firstName || '',
+        bio: userInfo?.bio || '',
         image: userInfo?.image || user?.imageUrl
     }
     return (
@@ -27,7 +27,7 @@ export default async function page(){
             <p className='mt-3 text-base-regular text-light-2'>Complete your profile not to use Threads</p>
 
             <section className='mt-9 bg-dark-2 p-10'>
-                <AccountProfile user={userData} btnTitle='Continue'/>
+                <AccountProfile user={userData} btnTitle='Continue' />
             </section>
         </main>
     )
