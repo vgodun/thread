@@ -36,6 +36,7 @@ function PostThread({ userId }: Props) {
         resolver: zodResolver(ThreadValidation),
         defaultValues: {
             thread: "",
+            imgPosts: "",
             accountId: userId,
         },
     });
@@ -43,10 +44,11 @@ function PostThread({ userId }: Props) {
     const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
 
         await createThread({
+            id: userId, // Add the missing 'id' property
             text: values.thread,
             author: userId,
             path: pathname,
-            imgPosts: values.imgPosts,
+            imgPosts: values.imgPosts || "", // Add a check to handle undefined value
         });
 
         router.push("/");
