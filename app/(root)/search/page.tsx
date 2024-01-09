@@ -36,7 +36,7 @@ async function Page({
           <p className='no-result'>No Result</p>
         ) : (
           <>
-            {result.users.map((person:any) => (
+            {result.users.map((person: any) => (
               <UserCard
                 key={person.id}
                 id={person.id}

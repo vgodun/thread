@@ -12,11 +12,11 @@ interface Props {
   imgUrl: any;
 }
 
-export default function LikesPosts({ threadId, userId, likes,name,username,imgUrl }: Props) {
+export default function LikesPosts({ threadId, userId, likes, name, username, imgUrl }: Props) {
   const route = useRouter();
   const pathname = usePathname();
   const handleLikeClick = async () => {
-    await likePost(threadId, userId, likes, pathname,name,username,imgUrl);
+    await likePost(threadId, userId, likes, pathname, name, username, imgUrl);
     route.refresh();
   };
   const isLiked = likes.some((like: any) => like.id === userId);

@@ -10,7 +10,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
-import ModalAuthorImg from "../../../../components/shared/ModalAuthorImg";
 
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
@@ -18,7 +17,7 @@ async function Page({ params }: { params: { id: string } }) {
 
   const userInfo = await fetchUser(params.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
-    
+
   return (
     <section>
       <ProfileHeader
