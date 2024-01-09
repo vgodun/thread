@@ -33,6 +33,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
                     name={userInfo?.name}
                     username={userInfo.username}
                     imgUrl={userInfo?.image || ''}
+                    imgPosts={thread?.imgPosts}
                     isComment />
             </div>
             <div className="mt-7">

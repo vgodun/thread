@@ -26,7 +26,7 @@ interface Props {
   name?: any;
   username?: any;
   imgUrl?: any;
-  imgPosts?: any;
+  imgPosts?: string;
 }
 
 function ThreadCard({
