@@ -46,7 +46,7 @@ function PostThread({ userId }: Props) {
             text: values.thread,
             author: userId,
             path: pathname,
-            imgPosts: values.imgPosts
+            imgPosts: values.imgPosts,
         });
 
         router.push("/");

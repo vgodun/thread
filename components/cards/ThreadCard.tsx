@@ -26,7 +26,7 @@ interface Props {
   name?: any;
   username?: any;
   imgUrl?: any;
-  imgPosts?: any;
+  imgPosts?: string;
 }
 
 function ThreadCard({
@@ -115,17 +115,32 @@ function ThreadCard({
             </div>
           </div>
         </div>
-        <DeleteThread
-          threadId={JSON.stringify(id)}
-          currentUserId={currentUserId}
-          authorId={author.id}
-          parentId={parentId}
-          isComment={isComment}
-        />
+        <div className="flex">
+          <div className=" flex pl-2">
+          <DeleteThread
+            threadId={JSON.stringify(id)}
+            currentUserId={currentUserId}
+            authorId={author.id}
+            parentId={parentId}
+            isComment={isComment}
+          />
+          {currentUserId === author.id && (
+            <Link href={`/thread/edit/${id}`}>
+            <Image
+              src='/assets/edit.svg'
+              alt='logout'
+              width={16}
+              height={16}
+              />
+              </Link>
+          )}
+          </div>
+        </div>
       </div>
       <div className="flex flex-row items-center">
         {isComment && (
           <div className='ml-1 mt-3 flex flex-row items-center gap-2'>
+            
             {comments.slice(0, 2).map((comment, index) => (
               <Image
                 key={index}

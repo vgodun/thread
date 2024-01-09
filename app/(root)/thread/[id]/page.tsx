@@ -1,6 +1,5 @@
 import ThreadCard from "@/components/cards/ThreadCard";
 import Comment from "@/components/forms/Comment";
-import LikesUsers from "@/components/shared/LikesUsers";
 import { fetchThreadById } from "@/lib/actions/thread.actions";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
@@ -18,6 +17,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
     const thread = await fetchThreadById(params.id);
 
+
     return (
         <section className='relative'>
             <div>
@@ -34,6 +34,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
                     name={userInfo?.name}
                     username={userInfo.username}
                     imgUrl={userInfo?.image || ''}
+                    imgPosts={thread?.imgPosts}
                     isComment />
             </div>
             <div className="mt-7">
