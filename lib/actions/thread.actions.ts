@@ -9,7 +9,7 @@ interface Params {
   text: string;
   author: string;
   path: string;
-  imgPosts: any;
+  imgPosts: string;
 }
 
 export async function createThread({
@@ -37,6 +37,37 @@ export async function createThread({
   } catch (error: any) {
     throw new Error(`Failed to create thread: ${error.message}`);
   }
+}
+interface Params{
+  id:string;
+  text:string;
+  imgPosts:string;
+  path:string;
+}
+
+export async function updateThread({
+  id,
+  text,
+  imgPosts,
+  path
+}:Params){
+connectToDB();
+try {
+  await Thread.findByIdAndUpdate(
+      {_id:id},
+      {
+         text:text,
+         imgPosts:imgPosts
+      },
+  );
+
+  if(path === `/thread/edit/${id}`){
+      revalidatePath(path)
+  }
+}
+catch (error: any) {
+  throw new Error(`Failed to fetch user: ${error.message}`);
+}
 }
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {

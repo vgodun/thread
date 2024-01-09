@@ -13,6 +13,8 @@ function Topbar() {
 
             <div className='flex items-center gap-1'>
                 <div className='block md:hidden'>
+                    
+                    1
                     <SignedIn>
                         <SignOutButton>
                             <div className='flex cursor-pointer'>
@@ -26,7 +28,6 @@ function Topbar() {
                         </SignOutButton>
                     </SignedIn>
                 </div>
-
                 <OrganizationSwitcher
                     appearance={{
                         baseTheme: dark,
