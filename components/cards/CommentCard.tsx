@@ -113,13 +113,27 @@ function CommentCard({
                         </div>
                     </div>
                 </div>
-                <DeleteComment
-                    threadId={JSON.stringify(id)}
-                    currentUserId={currentUserId}
-                    authorId={author.id}
-                    parentId={parentId}
-                    isComment={isComment}
-                />
+                <div className="flex">
+                    <div className=" flex pl-2">
+                        <DeleteThread
+                            threadId={JSON.stringify(id)}
+                            currentUserId={currentUserId}
+                            authorId={author.id}
+                            parentId={parentId}
+                            isComment={isComment}
+                        />
+                        {currentUserId === author.id && (
+                            <Link href={`/thread/edit/${id}`}>
+                                <Image
+                                    src='/assets/edit.svg'
+                                    alt='logout'
+                                    width={16}
+                                    height={16}
+                                />
+                            </Link>
+                        )}
+                    </div>
+                </div>
             </div>
             <div className="flex flex-row items-center">
                 {isComment && (
