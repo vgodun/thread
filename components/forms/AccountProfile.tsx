@@ -88,7 +88,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
             router.back();
         }
         else {
-            router.push(`/profile/${user.id}`);
+            router.push(`/profile/${user.username}`);
             router.refresh();
         }
     }

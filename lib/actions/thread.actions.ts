@@ -25,7 +25,7 @@ export async function createThread({
     const createdThread = await Thread.create({
       text,
       author,
-      imgPosts:imgPosts
+      imgPosts: imgPosts
     });
 
     //Update user model
@@ -38,11 +38,11 @@ export async function createThread({
     throw new Error(`Failed to create thread: ${error.message}`);
   }
 }
-interface Params{
-  id:string;
-  text:string;
-  imgPosts:string;
-  path:string;
+interface Params {
+  id: string;
+  text: string;
+  imgPosts: string;
+  path: string;
 }
 
 export async function updateThread({
@@ -50,24 +50,35 @@ export async function updateThread({
   text,
   imgPosts,
   path
-}:Params){
-connectToDB();
-try {
-  await Thread.findByIdAndUpdate(
-      {_id:id},
+}: Params) {
+  connectToDB();
+  try {
+    await Thread.findByIdAndUpdate(
+      { _id: id },
       {
-         text:text,
-         imgPosts:imgPosts
+        text: text,
+        imgPosts: imgPosts
       },
-  );
+    );
 
-  if(path === `/thread/edit/${id}`){
+    if (path === `/thread/edit/${id}`) {
       revalidatePath(path)
+    }
+  }
+  catch (error: any) {
+    throw new Error(`Failed to fetch user: ${error.message}`);
   }
 }
-catch (error: any) {
-  throw new Error(`Failed to fetch user: ${error.message}`);
-}
+export async function deleteImgPosts(threadId: string, imgPosts: string,):Promise<void>{
+  connectToDB();
+  console.log('imgPosts:', imgPosts);
+  
+  try{
+    await Thread.findByIdAndUpdate(threadId, { $unset: { imgPosts: "" } });
+    console.log(`Image posts field removed successfully from thread: ${threadId}`);
+  } catch (error) {
+    console.error(`There was an error removing the image posts field from the thread: ${threadId}`, error);
+  }
 }
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
@@ -213,10 +224,10 @@ export async function likePost(
     // Check if the user has already liked the post
     if (userId && userId.trim() !== "") {
       // If the user has already liked the post, remove the like
-      if (thread.likes.some((like:any) => like.id === getInfoLikes.id)) {
+      if (thread.likes.some((like: any) => like.id === getInfoLikes.id)) {
         // Remove the like from the array
         thread.likes = thread.likes.filter(
-          (existingLike:any) => existingLike.id !== userId
+          (existingLike: any) => existingLike.id !== userId
         );
       } else {
         // If the user has not liked the post, add the like

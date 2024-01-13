@@ -16,7 +16,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
     if (!userInfo?.onboarded) redirect('/onboarding');
 
     const thread = await fetchThreadById(params.id);
-
+    
 
     return (
         <section className='relative'>
@@ -27,12 +27,12 @@ const Page = async ({ params }: { params: { id: string } }) => {
                     currentUserId={user?.id || ''}
                     parentId={thread.parentId}
                     content={thread.text}
-                    author={thread.author}
+                    author={thread?.author}
                     createdAt={thread.createdAt}
-                    comments={thread.children}
+                    comments={thread?.children}
                     likes={thread.likes}
                     name={userInfo?.name}
-                    username={userInfo.username}
+                    username={userInfo?.username}
                     imgUrl={userInfo?.image || ''}
                     imgPosts={thread?.imgPosts}
                     isComment />
@@ -52,14 +52,14 @@ const Page = async ({ params }: { params: { id: string } }) => {
                         key={childrenItem._id}
                         id={childrenItem._id}
                         currentUserId={user?.id || ''}
-                        parentId={childrenItem.parentId}
+                        parentId={childrenItem?.parentId}
                         content={childrenItem.text}
-                        author={childrenItem.author}
+                        author={childrenItem?.author}
                         createdAt={childrenItem.createdAt}
                         comments={childrenItem.children}
                         likes={childrenItem.likes}
                         name={userInfo?.name}
-                        username={userInfo.username}
+                        username={userInfo?.username}
                         imgUrl={userInfo?.image || ''}
                         isComment
                     />

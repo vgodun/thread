@@ -28,7 +28,7 @@ export default function UserCard({ id, name, username, imgUrl, personType }: Pro
                 </div>
             </div>
             <Button className="user-card_btn" onClick={() => {
-                router.push(`/profile/${id}`);
+                router.push(`/profile/${username}`);
             }}>
                 View
             </Button>

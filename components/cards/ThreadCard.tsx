@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import DeleteThread from "../forms/DeleteThread";
 import LikesPosts from "../shared/LikesPosts";
 import { formatDateString } from "@/lib/utils";
-import Modal from "../shared/Modal";
+import ActionsPage from "@/app/(root)/thread/components/action";
+import ModalPost from "../shared/ModalPost";
 
 interface Props {
   id: string;
@@ -73,7 +73,7 @@ function ThreadCard({
             </Link>
             <p className='mt-2 text-small-regular text-light-2'>{content}</p>
             {imgPosts && (
-              <Modal imgUrl={imgPosts} />
+              <ModalPost imgUrl={imgPosts} />
             )}
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
@@ -95,13 +95,15 @@ function ThreadCard({
                     className='cursor-pointer object-contain'
                   />
                 </Link>
-                <Image
-                  src='/assets/repost.svg'
-                  alt='heart'
-                  width={24}
-                  height={24}
-                  className='cursor-pointer object-contain'
-                />
+                <Link href={`/replies/${id}`}>
+                  <Image
+                    src='/assets/repost.svg'
+                    alt='heart'
+                    width={24}
+                    height={24}
+                    className='cursor-pointer object-contain'
+                  />
+                </Link>
                 <Image
                   src='/assets/share.svg'
                   alt='heart'
@@ -117,30 +119,20 @@ function ThreadCard({
         </div>
         <div className="flex">
           <div className=" flex pl-2">
-          <DeleteThread
-            threadId={JSON.stringify(id)}
-            currentUserId={currentUserId}
-            authorId={author.id}
-            parentId={parentId}
-            isComment={isComment}
-          />
-          {currentUserId === author.id && (
-            <Link href={`/thread/edit/${id}`}>
-            <Image
-              src='/assets/edit.svg'
-              alt='logout'
-              width={16}
-              height={16}
+            <ActionsPage
+              id={id}
+              currentUserId={currentUserId}
+              authorId={author.id}
+              parentId={parentId}
+              isComment={isComment} 
               />
-              </Link>
-          )}
           </div>
         </div>
       </div>
       <div className="flex flex-row items-center">
         {isComment && (
           <div className='ml-1 mt-3 flex flex-row items-center gap-2'>
-            
+
             {comments.slice(0, 2).map((comment, index) => (
               <Image
                 key={index}
