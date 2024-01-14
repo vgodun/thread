@@ -93,7 +93,7 @@ const DialogPost = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-[50%] top-[50%] z-50 grid  translate-x-[-50%] translate-y-[-50%]  rounded-full object-cover shadow-2xl ",
+        "fixed left-[50%] top-[50%] z-50 grid  translate-x-[-50%] translate-y-[-50%]   shadow-2xl ",
         className
       )}
       {...props}
