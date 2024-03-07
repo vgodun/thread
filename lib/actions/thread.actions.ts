@@ -198,7 +198,6 @@ export async function addCommentToThread(
 export async function likePost(
   postId: string,
   userId: string,
-  likes: string[],
   path: string,
   name: any,
   username: any,

@@ -1,11 +1,9 @@
 "use client";
-
-import { useEffect } from 'react'
 import Image from "next/image";
 import { likePost } from "@/lib/actions/thread.actions";
 import { usePathname, useRouter } from "next/navigation";
-import {io,Socket} from 'socket.io-client'
-
+import { useWebsocket } from "@/context/WebsocketContext";
+import { useContext, useEffect } from "react";
 
 interface Props {
   threadId: string;
@@ -17,29 +15,30 @@ interface Props {
 }
 
 export default function LikesPosts({ threadId, userId, likes, name, username, imgUrl }: Props) {
-  const route = useRouter();
+  const router = useRouter();
   const pathname = usePathname();
-  useEffect(()=>{
-const socket=io('http://localhost:9000');
-    console.log('useEffect');
-    socket.on('connect',()=>{
-      console.log('Connected!')
-    })
-    console.log('listening Websocket');
+  const { emit, subscribe } = useWebsocket();
 
-    socket.on('likes',(likes)=>{
-      console.log('likes',likes)
+  useEffect(() => {
+     subscribe('likes', (receivedLikes: any) => {
+      console.log('Likes updated:', receivedLikes);
+      
+      if(receivedLikes.threadId === threadId) {
+        router.refresh();
+      }
     });
+  }, [subscribe]);
 
-    return ()=>{
-      socket.off('off')
-    }
-  },[])
   const handleLikeClick = async () => {
-    await likePost(threadId, userId, likes, pathname, name, username, imgUrl);
-    route.refresh();
+    await likePost(threadId, userId, pathname, name, username, imgUrl);
+    
+     emit('likes', {threadId, userId, name, username, imgUrl}); // Передати дані серверу);
+    
+    router.refresh();
   };
+
   const isLiked = likes.some((like: any) => like.id === userId);
+
   return (
     <div onClick={handleLikeClick}>
       <Image
@@ -47,7 +46,7 @@ const socket=io('http://localhost:9000');
         alt="heart"
         width={24}
         height={24}
-        className="cursor-pointer "
+        className="cursor-pointer"
       />
     </div>
   );
