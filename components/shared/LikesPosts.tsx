@@ -2,8 +2,8 @@
 import Image from "next/image";
 import { likePost } from "@/lib/actions/thread.actions";
 import { usePathname, useRouter } from "next/navigation";
-import { useWebsocket } from "@/context/WebsocketContext";
 import { useContext, useEffect } from "react";
+import { useWebsocket } from "@/context/WebsocketContext";
 
 interface Props {
   threadId: string;
@@ -20,7 +20,7 @@ export default function LikesPosts({ threadId, userId, likes, name, username, im
   const { emit, subscribe } = useWebsocket();
 
   useEffect(() => {
-     subscribe('likes', (receivedLikes: any) => {
+    subscribe && subscribe('likes', (receivedLikes: any) => {
       console.log('Likes updated:', receivedLikes);
       
       if(receivedLikes.threadId === threadId) {
@@ -32,7 +32,7 @@ export default function LikesPosts({ threadId, userId, likes, name, username, im
   const handleLikeClick = async () => {
     await likePost(threadId, userId, pathname, name, username, imgUrl);
     
-     emit('likes', {threadId, userId, name, username, imgUrl}); // Передати дані серверу);
+   emit && emit('likes', {threadId, userId, name, username, imgUrl}); // Передати дані серверу);
     
     router.refresh();
   };

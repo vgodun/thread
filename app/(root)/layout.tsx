@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <WebsocketProvider>
+      <WebsocketProvider>
         <body className={inter.className}>
           <Topbar />
           <main className='flex flex-row'>
@@ -35,7 +35,7 @@ export default function RootLayout({
           </main>
           <Bottombar />
         </body>
-        </WebsocketProvider>
+      </WebsocketProvider>
       </html>
     </ClerkProvider>
   )
