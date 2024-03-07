@@ -8,9 +8,12 @@ interface WebsocketContextProps {
 }
 export const WebsocketContext = createContext<WebsocketContextProps>({ socket: null, emit: null, subscribe: null});
 export function WebsocketProvider({ children }: { children: React.ReactNode }) {
+
     const socketRef = useRef<Socket | null>(null);
     useEffect(() => {
-        socketRef.current = io('https://thread-i7tqxbyoh-vgoduns-projects.vercel.app');
+        socketRef.current = io(`${process.env.NEXT_PUBLIC_WEBSOCKET_URL}`,{
+            withCredentials: true,
+        });
 
         socketRef.current.on("connect", () => {
             console.log("Connected to server");

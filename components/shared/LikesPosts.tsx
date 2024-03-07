@@ -35,6 +35,7 @@ export default function LikesPosts({ threadId, userId, likes, name, username, im
    emit && emit('likes', {threadId, userId, name, username, imgUrl}); // Передати дані серверу);
     
     router.refresh();
+    
   };
 
   const isLiked = likes.some((like: any) => like.id === userId);
