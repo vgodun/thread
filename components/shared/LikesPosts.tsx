@@ -23,7 +23,7 @@ export default function LikesPosts({ threadId, userId, likes, name, username, im
   return (
     <div onClick={handleLikeClick}>
       <Image
-        src={isLiked ? "/assets/heart-red/svg" : "/assets/heart-gray.svg"}
+        src={isLiked ? "/assets/heart-red.svg" : "/assets/heart-gray.svg"}
         alt="heart"
         width={24}
         height={24}
