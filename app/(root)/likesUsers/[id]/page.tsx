@@ -20,28 +20,25 @@ const Page = async ({ params }: { params: { id: any } }) => {
     return (
         <section className='relative'>
             <div>
-                {thread ? (
-                    <ThreadCard
-                        key={thread._id}
-                        id={thread._id}
-                        currentUserId={user?.id || ''}
-                        parentId={thread.parentId}
-                        content={thread.text}
-                        author={thread.author}
-                        createdAt={thread.createdAt}
-                        comments={thread.children}
-                        name={userInfo?.name}
-                        username={userInfo.username}
-                        imgUrl={userInfo?.image || ''}
-                        isComment />
-                ) : (
-                    redirect('/')
-                )
-                }
+                <ThreadCard
+                    key={thread._id}
+                    id={thread._id}
+                    currentUserId={user?.id || ''}
+                    parentId={thread.parentId}
+                    content={thread.text}
+                    author={thread.author}
+                    createdAt={thread.createdAt}
+                    comments={thread.children}
+                    likes={thread.likes}
+                    name={userInfo?.name}
+                    username={userInfo.username}
+                    imgUrl={userInfo?.image || ''}
+                    isComment />
             </div>
             <div className="flex flex-row">
                 <LikesUsers
                     id={user?.id || ''}
+                    likes={thread.likes}
                 />
             </div>
         </section>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import LikesPosts from "../shared/LikesPosts";
 import ActionsPage from "@/app/(root)/thread/components/action";
 import ModalPost from "../shared/ModalPost";
+import { likePost } from "@/lib/actions/thread.actions";
 
 interface Props {
   id: string;
@@ -21,6 +22,7 @@ interface Props {
     };
   }[];
   isComment: boolean;
+  likes: any;
   name?: any;
   username?: any;
   imgUrl?: any;
@@ -36,6 +38,7 @@ function ThreadCard({
   createdAt,
   comments,
   isComment,
+  likes,
   name,
   username,
   imgUrl,
@@ -78,6 +81,7 @@ function ThreadCard({
                 <LikesPosts
                   threadId={id}
                   userId={currentUserId}
+                  likes={likes}
                   name={name}
                   username={username}
                   imgUrl={imgUrl}
@@ -91,6 +95,7 @@ function ThreadCard({
                     className='cursor-pointer object-contain'
                   />
                 </Link>
+                <Link href={`/replies/${id}`}>
                   <Image
                     src='/assets/repost.svg'
                     alt='heart'
@@ -98,6 +103,7 @@ function ThreadCard({
                     height={24}
                     className='cursor-pointer object-contain'
                   />
+                </Link>
                 <Image
                   src='/assets/share.svg'
                   alt='heart'

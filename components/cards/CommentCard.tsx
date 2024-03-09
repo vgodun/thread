@@ -21,6 +21,7 @@ interface Props {
         };
     }[];
     isComment: boolean;
+    likes: any;
     name?: any;
     username?: any;
     imgUrl?: any;
@@ -36,6 +37,7 @@ function CommentCard({
     createdAt,
     comments,
     isComment,
+    likes,
     name,
     username,
     imgUrl,
@@ -78,6 +80,7 @@ function CommentCard({
                                     threadId={id}
                                     userId={currentUserId}
                                     name={name}
+                                    likes={likes}
                                     username={username}
                                     imgUrl={imgUrl}
                                 />

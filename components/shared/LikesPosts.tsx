@@ -6,23 +6,24 @@ import { usePathname, useRouter } from "next/navigation";
 interface Props {
   threadId: string;
   userId: any;
+  likes: any;
   name: any;
   username: any;
   imgUrl: any;
 }
 
-export default function LikesPosts({ threadId, userId, name, username, imgUrl }: Props) {
+export default function LikesPosts({ threadId, userId, likes, name, username, imgUrl }: Props) {
   const route = useRouter();
   const pathname = usePathname();
   const handleLikeClick = async () => {
     await likePost(threadId, userId, pathname, name, username, imgUrl);
     route.refresh();
   };
-  // const isLiked = likes.some((like: any) => like.id === userId);
+  const isLiked = likes.some((like: any) => like.id === userId);
   return (
     <div onClick={handleLikeClick}>
       <Image
-        src={"/assets/heart-gray.svg"}
+        src={isLiked ? "/assets/heart-red.svg" : "/assets/heart-gray.svg"}
         alt="heart"
         width={24}
         height={24}

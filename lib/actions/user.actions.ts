@@ -1,13 +1,11 @@
-"use server";
+'use server';
 
-import { FilterQuery, SortOrder } from "mongoose";
-import { revalidatePath } from "next/cache";
+import {connectToDB} from "@/lib/mongoose";
+import User from "@/lib/models/user.model";
+import {revalidatePath} from "next/cache";
 import Thread from "../models/thread.model";
-import User from "../models/user.model";
-
-import { connectToDB } from "../mongoose";
-
-
+import { getJsPageSizeInKb } from "next/dist/build/utils";
+import { FilterQuery, SortOrder } from "mongoose";
 
 interface Params{
     userId:string,

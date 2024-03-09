@@ -1,11 +1,9 @@
 "use server";
 
+import { connectToDB } from "@/lib/mongoose";
+import Thread from "@/lib/models/thread.model";
+import User from "@/lib/models/user.model";
 import { revalidatePath } from "next/cache";
-
-import { connectToDB } from "../mongoose";
-
-import User from "../models/user.model";
-import Thread from "../models/thread.model";
 
 interface Params {
   text: string;
@@ -241,7 +239,10 @@ export async function likePost(
 
     revalidatePath(path);
 
-    
+    // Determine if the user has liked the post after the update
+    // const isLiked = thread.likes.some((like:any) => like.id === userId);
+
+    // return { likes: updatedThread.likes, isLiked };
     return updatedThread.likes;
   } catch (error: any) {
     throw new Error(`Failed to add or remove like from the post: ${error.message}`);
