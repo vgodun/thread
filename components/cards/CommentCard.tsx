@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import LikesPosts from "../shared/LikesPosts";
-import { formatDateString } from "@/lib/utils";
 import ActionsPage from "@/app/(root)/thread/components/action";
 import ModalPost from "../shared/ModalPost";
 
@@ -160,11 +159,7 @@ function CommentCard({
 
             </div>
 
-            <div className="py-3">
-                <p className='text-subtle-medium text-gray-1'>
-                    {formatDateString(createdAt)}
-                </p>
-            </div>
+
         </article>
     );
 }
