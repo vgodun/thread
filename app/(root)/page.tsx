@@ -41,6 +41,7 @@ async function Home({
                                 comments={post.children}
                                 likes={post.likes}
                                 name={userInfo?.name}
+                                username={userInfo?.username}
                                 isComment
                             />
                         ))}
