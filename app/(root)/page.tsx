@@ -39,6 +39,7 @@ async function Home({
                                 author={post.author}
                                 createdAt={post.createdAt}
                                 comments={post.children}
+                                name={userInfo?.name}
                                 isComment
                             />
                         ))}
