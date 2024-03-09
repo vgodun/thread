@@ -17,7 +17,6 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
     const thread = await fetchThreadById(params.id);
 
-
     return (
         <section className='relative'>
             <div>
@@ -27,12 +26,12 @@ const Page = async ({ params }: { params: { id: string } }) => {
                     currentUserId={user?.id || ''}
                     parentId={thread.parentId}
                     content={thread.text}
-                    author={thread.author}
+                    author={thread?.author}
                     createdAt={thread.createdAt}
-                    comments={thread.children}
-                    likes={thread.likes}
+                    comments={thread?.children}
                     name={userInfo?.name}
-                    username={userInfo.username}
+                    likes={thread.likes}
+                    username={userInfo?.username}
                     imgUrl={userInfo?.image || ''}
                     imgPosts={thread?.imgPosts}
                     isComment />
@@ -52,14 +51,14 @@ const Page = async ({ params }: { params: { id: string } }) => {
                         key={childrenItem._id}
                         id={childrenItem._id}
                         currentUserId={user?.id || ''}
-                        parentId={childrenItem.parentId}
+                        parentId={childrenItem?.parentId}
                         content={childrenItem.text}
-                        author={childrenItem.author}
+                        author={childrenItem?.author}
                         createdAt={childrenItem.createdAt}
                         comments={childrenItem.children}
-                        likes={childrenItem.likes}
                         name={userInfo?.name}
-                        username={userInfo.username}
+                        likes={childrenItem.likes}
+                        username={userInfo?.username}
                         imgUrl={userInfo?.image || ''}
                         isComment
                     />

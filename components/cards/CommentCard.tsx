@@ -1,10 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import DeleteThread from "../forms/DeleteThread";
 import LikesPosts from "../shared/LikesPosts";
-import { formatDateString } from "@/lib/utils";
-import Modal from "../shared/Modal";
-import DeleteComment from "../forms/DeleteComment";
+import ActionsPage from "@/app/(root)/thread/components/action";
+import ModalPost from "../shared/ModalPost";
 
 interface Props {
     id: string;
@@ -23,7 +21,7 @@ interface Props {
         };
     }[];
     isComment: boolean;
-    likes: string[];
+    likes: any;
     name?: any;
     username?: any;
     imgUrl?: any;
@@ -74,15 +72,15 @@ function CommentCard({
                         </Link>
                         <p className='mt-2 text-small-regular text-light-2'>{content}</p>
                         {imgPosts && (
-                            <Modal imgUrl={imgPosts} />
+                            <ModalPost imgUrl={imgPosts} />
                         )}
                         <div className={`${!isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
                             <div className='flex gap-3.5'>
                                 <LikesPosts
                                     threadId={id}
                                     userId={currentUserId}
-                                    likes={likes}
                                     name={name}
+                                    likes={likes}
                                     username={username}
                                     imgUrl={imgUrl}
                                 />
@@ -115,23 +113,13 @@ function CommentCard({
                 </div>
                 <div className="flex">
                     <div className=" flex pl-2">
-                        <DeleteThread
-                            threadId={JSON.stringify(id)}
-                            currentUserId={currentUserId}
-                            authorId={author.id}
-                            parentId={parentId}
-                            isComment={isComment}
-                        />
-                        {currentUserId === author.id && (
-                            <Link href={`/thread/edit/${id}`}>
-                                <Image
-                                    src='/assets/edit.svg'
-                                    alt='logout'
-                                    width={16}
-                                    height={16}
-                                />
-                            </Link>
-                        )}
+                    <ActionsPage 
+                     id={id}
+                     currentUserId={currentUserId}
+                     authorId={author.id}
+                     parentId={parentId}
+                     isComment={isComment}
+                    />
                     </div>
                 </div>
             </div>
@@ -159,23 +147,11 @@ function CommentCard({
                         )}
                     </Link>
                 }
-                {
-                    <Link href={`/likesUsers/${id}`} className="mt-3">
-                        {likes?.length === 0 ? null : (
-                            <p className="mt-1 text-subtle-medium text-gray-1">
-                                {likes?.length} lik{likes?.length > 1 ? "es" : "e"}
-                            </p>
-                        )}
-                    </Link>
-                }
+               
 
             </div>
 
-            <div className="py-3">
-                <p className='text-subtle-medium text-gray-1'>
-                    {formatDateString(createdAt)}
-                </p>
-            </div>
+
         </article>
     );
 }

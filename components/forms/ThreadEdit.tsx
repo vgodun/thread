@@ -22,27 +22,27 @@ import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from '@/lib/uploadthing';
 import { updateUser } from "@/lib/actions/user.actions";
 import { usePathname, useRouter } from "next/navigation";
-import { updateThread } from "@/lib/actions/thread.actions";
+import { deleteImgPosts, updateThread } from "@/lib/actions/thread.actions";
 import { ThreadEdits } from "@/lib/validations/thread";
 
-interface Props{
-    thread:{
-        id:string;
-        text:string;
-        imgPosts?:string;
+interface Props {
+    thread: {
+        id: string;
+        text: string;
+        imgPosts?: string;
     },
-        btnTitle:string;
-    }
-const ThreadEdit = ({ thread,btnTitle }: Props) => {
+    btnTitle: string;
+}
+const ThreadEdit = ({ thread, btnTitle }: Props) => {
     const [files, setFiles] = useState<File[]>([]);
     const { startUpload } = useUploadThing('media');
     const router = useRouter();
     const pathname = usePathname();
     const form = useForm({
-        resolver:zodResolver(ThreadEdits),
-        defaultValues:{
-            text:thread?.text || '',
-            imgPosts:thread?.imgPosts || '',
+        resolver: zodResolver(ThreadEdits),
+        defaultValues: {
+            text: thread?.text || '',
+            imgPosts: thread?.imgPosts || '',
         }
     });
 
@@ -61,68 +61,127 @@ const ThreadEdit = ({ thread,btnTitle }: Props) => {
             fileReader.readAsDataURL(file);
         }
     }
-    const onSubmit=async (values: z.infer<typeof ThreadEdits>) => {
-        
- 
+    const deleteImage = async () => {
+        if (thread.id && thread.imgPosts) {
+            await deleteImgPosts(thread.id, thread.imgPosts || '');
+            form.setValue('imgPosts', '');
+          }
+    }
+    const onSubmit = async (values: z.infer<typeof ThreadEdits>) => {
+
+
         await updateThread({
-            id: thread.id,
+            id: thread?.id,
             text: values.text,
             imgPosts: values.imgPosts || '',
             path: pathname,
             author: '', // Add the missing "author" property
         });
-        if(pathname === '/thread/edit/'){
+        if (pathname === `/thread/edit/`) {
             router.back();
         }
         else {
             router.push(`/`);
             router.refresh();
         }
-     }
+    }
 
 
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-start gap-10">
-                {thread.imgPosts && (
-                <FormField
-                    control={form.control}
-                    name="imgPosts"
-                    render={({ field }) => (
-                        <FormItem className='flex items-center gap-4'>
-                            <FormLabel className='account-form_image-label'>
-                                {field.value ? (
-                                    <Image
-                                        src={field.value}
-                                        alt='profile photo'
-                                        width={96}
-                                        height={96}
-                                        priority
-                                        className='rounded-full object-contain'
+                {thread.imgPosts ? (
+                    <FormField
+                        control={form.control}
+                        name="imgPosts"
+                        render={({ field }) => (
+                            <FormItem className='flex items-center gap-4'>
+                                <FormLabel className='account-form_image-label'>
+                                    {field.value ? (
+                                        <Image
+                                            src={field.value}
+                                            alt='profile photo'
+                                            width={650}
+                                            height={650}
+                                            priority
+                                            className='rounded-full object-contain'
+                                        />
+                                    ) : <Image
+                                    src='/assets/profile.svg'
+                                    alt='profile photo'
+                                    width={96}
+                                    height={96}
+                                    priority
+                                    className='rounded-full object-contain'
+                                />}
+                                </FormLabel>
+                                <FormControl className='flex-1 text-base-semibold text-gray-200'>
+                                    <Input
+                                        type='file'
+                                        accept='image/*'
+                                        placeholder='Upload a photo'
+                                        className='account-form_image-input'
+                                        onChange={(e) => handleImage(e, field.onChange)}
                                     />
-                                ) : (
-                                    <Image
-                                        src='/assets/profile.svg'
-                                        alt='profile photo'
-                                        width={24}
-                                        height={24}
-                                        className='object-contain'
-                                    />
-                                )}
-                            </FormLabel>
-                            <FormControl className='flex-1 text-base-semibold text-gray-200'>
-                                <Input
-                                    type='file'
-                                    accept='image/*'
-                                    placeholder='Upload a photo'
-                                    className='account-form_image-input'
-                                    onChange={(e) => handleImage(e, field.onChange)}
+                                </FormControl>
+                                <Image
+                                    src='/assets/delete.svg'
+                                    alt='delte'
+                                    width={18}
+                                    height={18}
+                                    className='cursor-pointer object-contain'
+                                    onClick={deleteImage}
                                 />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                ):(
+                    <FormField
+                        control={form.control}
+                        name="imgPosts"
+                        render={({ field }) => (
+                            <FormItem className='flex items-center gap-4'>
+                                <FormLabel className='account-form_image-label'>
+                                    {field.value ? (
+                                        <Image
+                                            src={field.value}
+                                            alt='profile photo'
+                                            width={650}
+                                            height={650}
+                                            priority
+                                            className='rounded-full object-contain'
+                                        />
+                                    ) : <Image
+                                    src='/assets/profile.svg'
+                                    alt='profile photo'
+                                    width={96}
+                                    height={96}
+                                    priority
+                                    className='rounded-full object-contain'
+                                />}
+                                </FormLabel>
+                                <FormControl className='flex-1 text-base-semibold text-gray-200'>
+                                    <Input
+                                        type='file'
+                                        accept='image/*'
+                                        placeholder='Upload a photo'
+                                        className='account-form_image-input'
+                                        onChange={(e) => handleImage(e, field.onChange)}
+                                    />
+                                </FormControl>
+                                <Image
+                                    src='/assets/delete.svg'
+                                    alt='delte'
+                                    width={18}
+                                    height={18}
+                                    className='cursor-pointer object-contain'
+                                    onClick={deleteImage}
+                                />
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                 )}
                 <FormField
                     control={form.control}
@@ -133,9 +192,9 @@ const ThreadEdit = ({ thread,btnTitle }: Props) => {
                                 Content
                             </FormLabel>
                             <FormControl>
-                            <FormControl className='no-focus border border-dark-4 bg-dark-3 text-light-1'>
-                                <Textarea rows={5} {...field} />
-                            </FormControl>
+                                <FormControl className='no-focus border border-dark-4 bg-dark-3 text-light-1'>
+                                    <Textarea rows={5} {...field} />
+                                </FormControl>
                             </FormControl>
                             <FormMessage />
                         </FormItem>

@@ -1,5 +1,3 @@
-import AccountProfile from "@/components/forms/AccountProfile";
-import { redirect } from "next/navigation";
 import React from "react";
 import { currentUser } from "@clerk/nextjs";
 import { fetchUser } from "@/lib/actions/user.actions";
@@ -19,8 +17,8 @@ export default async function page({params}:{params:{id:string}}){
 
 
     const userData={
-       id:thread.id,
-       text:thread.text,
+       id:thread?.id,
+       text:thread?.text,
        imgPosts:thread.imgPosts,
     }
     
@@ -30,7 +28,7 @@ export default async function page({params}:{params:{id:string}}){
             <p className='mt-3 text-base-regular text-light-2'>Complete your profile not to use Threads</p>
 
             <section className='mt-9 bg-dark-2 p-10'>
-                <ThreadEdit thread={userData} btnTitle="Continue"/>
+                <ThreadEdit thread={userData} btnTitle="Edit"/>
             </section>
         </main>
     )

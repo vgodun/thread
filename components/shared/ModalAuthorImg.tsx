@@ -1,11 +1,8 @@
 'use client';
 import {
     Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
     DialogTrigger,
+    DialogAuthor
 } from "@/components/ui/dialog";
 import Image from "next/image";
 
@@ -26,7 +23,7 @@ const ModalAuthorImg = ({ imgUrl, alt }: Props) => {
                     className='rounded-full object-cover shadow-2xl'
                 />
             </DialogTrigger>
-            <DialogContent className="rounded-full object-cover shadow-2xl">
+            <DialogAuthor className="rounded-full object-cover shadow-2xl">
                 <Image
                     src={imgUrl}
                     alt={alt}
@@ -34,7 +31,7 @@ const ModalAuthorImg = ({ imgUrl, alt }: Props) => {
                     height={500}
                     className='rounded-full object-cover shadow-2xl'
                 />
-            </DialogContent>
+            </DialogAuthor>
         </Dialog>
     )
 }
