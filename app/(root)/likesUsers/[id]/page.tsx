@@ -30,7 +30,6 @@ const Page = async ({ params }: { params: { id: any } }) => {
                         author={thread.author}
                         createdAt={thread.createdAt}
                         comments={thread.children}
-                        likes={thread.likes}
                         name={userInfo?.name}
                         username={userInfo.username}
                         imgUrl={userInfo?.image || ''}
@@ -43,7 +42,6 @@ const Page = async ({ params }: { params: { id: any } }) => {
             <div className="flex flex-row">
                 <LikesUsers
                     id={user?.id || ''}
-                    likes={thread.likes}
                 />
             </div>
         </section>

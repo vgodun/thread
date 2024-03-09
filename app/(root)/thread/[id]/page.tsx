@@ -30,7 +30,6 @@ const Page = async ({ params }: { params: { id: string } }) => {
                     author={thread?.author}
                     createdAt={thread.createdAt}
                     comments={thread?.children}
-                    likes={thread.likes}
                     name={userInfo?.name}
                     username={userInfo?.username}
                     imgUrl={userInfo?.image || ''}
@@ -42,7 +41,6 @@ const Page = async ({ params }: { params: { id: string } }) => {
                     threadId={thread.id}
                     currentUserImg={userInfo.image}
                     currentUserId={JSON.stringify(userInfo._id)}
-                    likes={thread.likes}
                 />
 
             </div>
@@ -57,7 +55,6 @@ const Page = async ({ params }: { params: { id: string } }) => {
                         author={childrenItem?.author}
                         createdAt={childrenItem.createdAt}
                         comments={childrenItem.children}
-                        likes={childrenItem.likes}
                         name={userInfo?.name}
                         username={userInfo?.username}
                         imgUrl={userInfo?.image || ''}

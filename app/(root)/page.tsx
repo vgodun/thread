@@ -39,7 +39,6 @@ async function Home({
                                 author={post.author}
                                 createdAt={post.createdAt}
                                 comments={post.children}
-                                likes={post.likes}
                                 name={userInfo?.name}
                                 username={userInfo?.username}
                                 imgUrl={userInfo?.image}

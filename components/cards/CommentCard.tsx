@@ -21,7 +21,6 @@ interface Props {
         };
     }[];
     isComment: boolean;
-    likes: any;
     name?: any;
     username?: any;
     imgUrl?: any;
@@ -37,7 +36,6 @@ function CommentCard({
     createdAt,
     comments,
     isComment,
-    likes,
     name,
     username,
     imgUrl,
@@ -79,7 +77,6 @@ function CommentCard({
                                 <LikesPosts
                                     threadId={id}
                                     userId={currentUserId}
-                                    likes={likes}
                                     name={name}
                                     username={username}
                                     imgUrl={imgUrl}
@@ -147,15 +144,7 @@ function CommentCard({
                         )}
                     </Link>
                 }
-                {
-                    <Link href={`/likesUsers/${id}`} className="mt-3">
-                        {likes?.length === 0 ? null : (
-                            <p className="mt-1 text-subtle-medium text-gray-1">
-                                {likes?.length} lik{likes?.length > 1 ? "es" : "e"}
-                            </p>
-                        )}
-                    </Link>
-                }
+               
 
             </div>
 

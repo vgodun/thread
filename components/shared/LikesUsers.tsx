@@ -5,15 +5,15 @@ import { useRouter } from "next/navigation";
 
 interface Props {
     id: string;
-    likes: any;
+
 }
 
-export default function LikesUsers({ id, likes }: Props) {
+export default function LikesUsers({ id }: Props) {
     const router = useRouter();
     return (
         <article className="user-card w-full">
             <div className="flex w-full flex-col">
-                {likes.map((like: any) => (
+                {/* {likes.map((like: any) => (
                     <div key={like.id} className="flex w-full flex-col rounded-xl bg-dark-2 p-7 my-3">
                         <div className="user-card_avatar">
                             <Image
@@ -34,7 +34,7 @@ export default function LikesUsers({ id, likes }: Props) {
                             </Button>
                         </div>
                     </div>
-                ))}
+                ))} */}
             </div>
         </article>
     );

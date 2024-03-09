@@ -32,7 +32,6 @@ const ThreadsTab = async ({ currentUserId, accountId, accountType, name, usernam
                     }
                     createdAt={thread.createdAt}
                     comments={thread.children}
-                    likes={thread.likes}
                     name={name}
                     username={username}
                     imgUrl={imgUrl}
