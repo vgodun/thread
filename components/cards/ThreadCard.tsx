@@ -163,7 +163,11 @@ function ThreadCard({
         }
 
       </div>
-
+      <div className="py-3">
+                <p className='text-subtle-medium text-gray-1'>
+                    data card
+                </p>
+            </div>
 
     </article>
   );

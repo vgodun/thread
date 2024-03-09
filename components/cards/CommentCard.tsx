@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import LikesPosts from "../shared/LikesPosts";
+// import { formatDateString } from "@/lib/utils";
 import ActionsPage from "@/app/(root)/thread/components/action";
 import ModalPost from "../shared/ModalPost";
 
@@ -79,8 +80,8 @@ function CommentCard({
                                 <LikesPosts
                                     threadId={id}
                                     userId={currentUserId}
-                                    name={name}
                                     likes={likes}
+                                    name={name}
                                     username={username}
                                     imgUrl={imgUrl}
                                 />
@@ -147,11 +148,23 @@ function CommentCard({
                         )}
                     </Link>
                 }
-               
+                {
+                    <Link href={`/likesUsers/${id}`} className="mt-3">
+                        {likes?.length === 0 ? null : (
+                            <p className="mt-1 text-subtle-medium text-gray-1">
+                                {likes?.length} lik{likes?.length > 1 ? "es" : "e"}
+                            </p>
+                        )}
+                    </Link>
+                }
 
             </div>
 
-
+            <div className="py-3">
+                <p className='text-subtle-medium text-gray-1'>
+                    data comment
+                </p>
+            </div>
         </article>
     );
 }

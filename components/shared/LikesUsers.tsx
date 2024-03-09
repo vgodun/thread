@@ -8,8 +8,10 @@ interface Props {
     likes: any;
 }
 
-export default function LikesUsers({ id,likes }: Props) {
+export default function LikesUsers({ id, likes }: Props) {
     const router = useRouter();
+    console.log('likes',likes);
+    
     return (
         <article className="user-card w-full">
             <div className="flex w-full flex-col">
@@ -17,15 +19,15 @@ export default function LikesUsers({ id,likes }: Props) {
                     <div key={like.id} className="flex w-full flex-col rounded-xl bg-dark-2 p-7 my-3">
                         <div className="user-card_avatar">
                             <Image
-                                src={like?.image}
+                                src={like.image? like.image : '/assets/user.svg'}
                                 alt="logo"
                                 width={48}
                                 height={48}
                                 className="rounded-full"
                             />
                             <div className="flex-1 text-ellipsis w-full">
-                                <h4 className="text-base-semibold text-light-1">{like?.name}</h4>
-                                <p className="text-small-medium text-gray-1">@{like?.username}</p>
+                                <h4 className="text-base-semibold text-light-1">{like.name}</h4>
+                                <p className="text-small-medium text-gray-1">{like.username?`@${like.username}`:null}</p>
                             </div>
                             <Button className="user-card_btn" onClick={() => {
                                 router.push(`/profile/${like.id}`);
