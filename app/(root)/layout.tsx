@@ -1,12 +1,10 @@
 import '../global.css'
 import React from 'react';
-import { Inter } from 'next/font/google'
 import { ClerkProvider } from "@clerk/nextjs";
 import Topbar from "@/components/shared/Topbar";
 import Bottombar from "@/components/shared/Bottombar";
 import LeftSidebar from "@/components/shared/LeftSidebar";
 
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Threads',
@@ -21,7 +19,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
+        <body>
           <Topbar />
           <main className='flex flex-row'>
             <LeftSidebar />
