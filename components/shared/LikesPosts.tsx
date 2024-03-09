@@ -19,11 +19,11 @@ export default function LikesPosts({ threadId, userId, likes, name, username, im
     await likePost(threadId, userId, pathname, name, username, imgUrl);
     route.refresh();
   };
-  const isLiked = likes.some((like: any) => like.id === userId);
+  // const isLiked = likes.some((like: any) => like.id === userId);
   return (
     <div onClick={handleLikeClick}>
       <Image
-        src={isLiked ? "/assets/heart-red.svg" : "/assets/heart-gray.svg"}
+        src={"/assets/heart-gray.svg"}
         alt="heart"
         width={24}
         height={24}
