@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  hydrate: true,
     experimental: {
       serverActions: true,
       bodySizeLimit:"500mb",
