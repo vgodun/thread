@@ -32,7 +32,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
                     name={userInfo?.name}
                     likes={thread.likes}
                     username={userInfo?.username}
-                    imgUrl={userInfo?.image || ''}
+                    imgUrl={userInfo?.image}
                     imgPosts={thread?.imgPosts}
                     isComment />
             </div>
@@ -59,7 +59,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
                         name={userInfo?.name}
                         likes={childrenItem.likes}
                         username={userInfo?.username}
-                        imgUrl={userInfo?.image || ''}
+                        imgUrl={userInfo?.image}
                         isComment
                     />
                 ))}
