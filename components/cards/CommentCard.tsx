@@ -22,7 +22,7 @@ interface Props {
         };
     }[];
     isComment: boolean;
-    likes: string[];
+    likes: any;
     name?: any;
     username?: any;
     imgUrl?: any;

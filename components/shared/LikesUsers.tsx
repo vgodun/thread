@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 interface Props {
     id: string;
-    likes: Array<any>;
+    likes: any;
 }
 
 export default function LikesUsers({ id, likes }: Props) {

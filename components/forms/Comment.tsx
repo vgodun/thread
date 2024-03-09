@@ -23,7 +23,7 @@ interface Props {
     threadId: string;
     currentUserImg: string;
     currentUserId: string;
-    likes: string[];
+    likes?: any;
 }
 const Comment = ({ threadId, currentUserImg, currentUserId, likes }: Props) => {
     const pathname = usePathname();

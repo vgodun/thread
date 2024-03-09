@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 interface Props {
   threadId: string;
   userId: any;
-  likes: string[];
+  likes: any;
   name: any;
   username: any;
   imgUrl: any;
@@ -16,7 +16,7 @@ export default function LikesPosts({ threadId, userId, likes, name, username, im
   const route = useRouter();
   const pathname = usePathname();
   const handleLikeClick = async () => {
-    await likePost(threadId, userId, likes, pathname, name, username, imgUrl);
+    await likePost(threadId, userId, pathname, name, username, imgUrl);
     route.refresh();
   };
   const isLiked = likes.some((like: any) => like.id === userId);

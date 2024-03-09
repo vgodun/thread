@@ -22,7 +22,7 @@ interface Props {
     };
   }[];
   isComment: boolean;
-  likes: string[];
+  likes: any;
   name?: any;
   username?: any;
   imgUrl?: any;
@@ -95,7 +95,6 @@ function ThreadCard({
                     className='cursor-pointer object-contain'
                   />
                 </Link>
-                <Link href={`/replies/${id}`}>
                   <Image
                     src='/assets/repost.svg'
                     alt='heart'
@@ -103,7 +102,6 @@ function ThreadCard({
                     height={24}
                     className='cursor-pointer object-contain'
                   />
-                </Link>
                 <Image
                   src='/assets/share.svg'
                   alt='heart'
