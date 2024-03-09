@@ -2,7 +2,7 @@
 const nextConfig = {
     experimental: {
       serverActions: true,
-      serverActionsBodySizeLimit: "500mb",
+      bodySizeLimit:"500mb",
       serverComponentsExternalPackages: ["mongoose"],
     },
   
@@ -34,11 +34,6 @@ const nextConfig = {
           hostname:"utfs.io"
         }
       ],
-    },
-    api: {
-      bodyParser: {
-        sizeLimit: '10mb',
-      },
     },
   };
   
