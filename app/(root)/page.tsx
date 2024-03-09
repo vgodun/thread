@@ -30,25 +30,17 @@ async function Home({
                 ) : (
                     <>
                         {result.posts.map((post: any) => (
-                            <div>
-                                {post.text}
-                            </div>
-                            // <ThreadCard
-                            //     key={post._id}
-                            //     id={post._id}
-                            //     currentUserId={user?.id || ''}
-                            //     parentId={post.parentId}
-                            //     content={post.text}
-                            //     author={post.author}
-                            //     createdAt={post.createdAt}
-                            //     comments={post.children}
-                            //     likes={post.likes}
-                            //     name={userInfo?.name}
-                            //     username={userInfo?.username}
-                            //     imgUrl={userInfo?.image}
-                            //     imgPosts={post.imgPosts}
-                            //     isComment
-                            // />
+                            <ThreadCard
+                                key={post._id}
+                                id={post._id}
+                                currentUserId={user?.id || ''}
+                                parentId={post.parentId}
+                                content={post.text}
+                                author={post.author}
+                                createdAt={post.createdAt}
+                                comments={post.children}
+                                isComment
+                            />
                         ))}
                     </>
                 )}
