@@ -154,7 +154,15 @@ function ThreadCard({
             )}
           </Link>
         }
-
+         {
+          <Link href={`/likesUsers/${id}`} className="mt-3">
+            {likes.length === 0 ? null : (
+              <p className="mt-1 text-subtle-medium text-gray-1">
+                {likes.length} lik{likes.length > 1 ? "es" : "e"}
+              </p>
+            )}
+          </Link>
+        }
 
       </div>
 
