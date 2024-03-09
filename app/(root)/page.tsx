@@ -42,6 +42,7 @@ async function Home({
                                 likes={post.likes}
                                 name={userInfo?.name}
                                 username={userInfo?.username}
+                                imgUrl={userInfo?.image}
                                 isComment
                             />
                         ))}

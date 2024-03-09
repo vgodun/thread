@@ -19,7 +19,7 @@ export default function LikesUsers({ id, likes }: Props) {
                     <div key={like.id} className="flex w-full flex-col rounded-xl bg-dark-2 p-7 my-3">
                         <div className="user-card_avatar">
                             <Image
-                                src={like.image? like.image : '/assets/user.svg'}
+                                src={like?.image? like.image : '/assets/user.svg'}
                                 alt="logo"
                                 width={48}
                                 height={48}

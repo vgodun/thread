@@ -239,11 +239,7 @@ export async function likePost(
 
     revalidatePath(path);
 
-    // Determine if the user has liked the post after the update
-    // const isLiked = thread.likes.some((like:any) => like.id === userId);
-
-    // return { likes: updatedThread.likes, isLiked };
-    return updatedThread.likes;
+   return updatedThread.likes;
   } catch (error: any) {
     throw new Error(`Failed to add or remove like from the post: ${error.message}`);
   }
