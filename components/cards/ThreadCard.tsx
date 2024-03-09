@@ -72,9 +72,9 @@ function ThreadCard({
               </h4>
             </Link>
             <p className='mt-2 text-small-regular text-light-2'>{content}</p>
-            {imgPosts && (
+            {/* {imgPosts && (
               <ModalPost imgUrl={imgPosts} />
-            )}
+            )} */}
             
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
