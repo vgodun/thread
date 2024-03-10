@@ -15,12 +15,14 @@ async function Page() {
     const userId = userInfo._id.toString();
     const result = await fetchPosts(1, 30);
     
+
+    
     
     
     return (
         <>
             <h1 className='head-text'>Create Thread</h1>
-            <PostThread userId={userId} posts={result.posts[0].imgPosts}/>
+            <PostThread userId={userId} postImg={result.posts[0].imgPosts}/>
         </>
     );
 }

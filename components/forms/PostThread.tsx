@@ -27,10 +27,10 @@ import { isBase64Image } from "@/lib/utils";
 
 interface Props {
     userId: string;
-    posts:any;
+    postImg:any;
 }
 
-function PostThread({ userId,posts }: Props) {
+function PostThread({ userId,postImg }: Props) {
     const router = useRouter();
     const pathname = usePathname();
     const [files, setFiles] = useState<File[]>([]);
@@ -41,7 +41,7 @@ function PostThread({ userId,posts }: Props) {
         resolver: zodResolver(ThreadValidation),
         defaultValues: {
             thread: "",
-            imgPosts: posts?.imgPosts ||"",
+            imgPosts: postImg ||"",
             accountId: userId,
         },
     });
