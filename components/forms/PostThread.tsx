@@ -80,7 +80,7 @@ function PostThread({ userId,postImg }: Props) {
             text: values.thread,
             author: userId,
             path: pathname,
-            imgPosts: values.imgPosts || null, // Add a check to handle undefined value
+            imgPosts: values.imgPosts || '', // Add a check to handle undefined value
         });
 
         router.push("/");

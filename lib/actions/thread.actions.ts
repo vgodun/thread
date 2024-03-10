@@ -9,7 +9,7 @@ interface Params {
   text: string;
   author: string;
   path: string;
-  imgPosts: string | null;
+  imgPosts: string;
 }
 
 export async function createThread({
@@ -41,7 +41,7 @@ export async function createThread({
 interface Params {
   id: string;
   text: string;
-  imgPosts: string | null;
+  imgPosts: string;
   path: string;
 }
 
@@ -71,6 +71,7 @@ export async function updateThread({
 }
 export async function deleteImgPosts(threadId: string, imgPosts: string,):Promise<void>{
   connectToDB();
+  console.log('imgPosts:', imgPosts);
   
   try{
     await Thread.findByIdAndUpdate(threadId, { $unset: { imgPosts: "" } });

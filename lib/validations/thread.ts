@@ -3,7 +3,7 @@ import * as z from 'zod';
 export const ThreadValidation=z.object({
     thread:z.string().nonempty().min(1,{message:'Minimum 1 characters'}),
     accountId:z.string(),
-imgPosts:z.string().optional(),
+imgPosts:z.string().url(),
 })
 
 export const ThreadEdits=z.object({
