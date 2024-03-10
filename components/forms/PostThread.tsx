@@ -41,7 +41,7 @@ function PostThread({ userId,postImg }: Props) {
         resolver: zodResolver(ThreadValidation),
         defaultValues: {
             thread: "",
-            imgPosts: postImg ||"",
+            imgPosts: postImg || '',
             accountId: userId,
         },
     });
@@ -80,7 +80,7 @@ function PostThread({ userId,postImg }: Props) {
             text: values.thread,
             author: userId,
             path: pathname,
-            imgPosts: values.imgPosts || '', // Add a check to handle undefined value
+            imgPosts: values.imgPosts || null, // Add a check to handle undefined value
         });
 
         router.push("/");
@@ -113,28 +113,23 @@ function PostThread({ userId,postImg }: Props) {
                     render={({ field }) => (
                         <FormItem className='flex items-center gap-4'>
                             <FormLabel className='w-62 h-62 '>
-                            {field.value || '' ? (
+                            {field.value ? (
                                     <Image
-                                        src={field.value || ''}
+                                        src={field.value}
                                         alt='profile photo'
-                                        width={1000}
-                                        height={1000}
+                                        width={96}
+                                        height={96}
+                                        priority
+                                        className='rounded-full object-contain'
                                     />
-                                ) : (
-                                    <Image
-                                        src='/assets/profile.svg'
-                                        alt='profile photo'
-                                        width={24}
-                                        height={24}
-                                        className='flex h-24 w-24 items-center justify-center rounded-full bg-dark-4 !important'
-                                    />
-                                )}
+                                ) : ''}
                             </FormLabel>
                             <FormControl className='flex flex-col flex-1 text-base-semibold text-gray-200 '>
-                                <Input
+                            <Input
                                     type='file'
-                                    accept="image/*"
-                                    className='hidden'
+                                    accept='image/*'
+                                    placeholder='Upload a photo'
+                                    className='account-form_image-input'
                                     onChange={(e) => handleImage(e, field.onChange)}
                                 />
                             </FormControl>

@@ -14,7 +14,7 @@ async function Page() {
     if (!userInfo?.onboarded) redirect("/onboarding");
     const userId = userInfo._id.toString();
     const result = await fetchPosts(1, 30);
-    
+    const posts = result.posts ? result.posts[0].imgPosts : '';
 
     
     
@@ -22,7 +22,7 @@ async function Page() {
     return (
         <>
             <h1 className='head-text'>Create Thread</h1>
-            <PostThread userId={userId} postImg={result.posts[0].imgPosts}/>
+            <PostThread userId={userId} postImg={posts?.imgPosts}/>
         </>
     );
 }
