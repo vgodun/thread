@@ -43,7 +43,6 @@ async function Home({
                                 name={userInfo?.name}
                                 username={userInfo?.username}
                                 imgUrl={userInfo?.image}
-                                imgPosts={post.imgPosts || ''}
                                 isComment
                             />
                         ))}
