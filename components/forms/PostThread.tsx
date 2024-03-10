@@ -22,41 +22,34 @@ import { createThread } from "@/lib/actions/thread.actions";
 import Image from "next/image";
 import { Input } from "../ui/input";
 import { ChangeEvent, useState } from "react";
+import { useUploadThing } from "@/lib/uploadthing";
+import { isBase64Image } from "@/lib/utils";
 
 interface Props {
     userId: string;
+    posts:any;
 }
 
-function PostThread({ userId }: Props) {
+function PostThread({ userId,posts }: Props) {
     const router = useRouter();
     const pathname = usePathname();
     const [files, setFiles] = useState<File[]>([]);
+    const { startUpload } = useUploadThing('media');
+    
 
-    const form = useForm<z.infer<typeof ThreadValidation>>({
+    const form = useForm({
         resolver: zodResolver(ThreadValidation),
         defaultValues: {
             thread: "",
-            imgPosts: "",
+            imgPosts: posts?.imgPosts ||"",
             accountId: userId,
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
-
-        await createThread({
-            id: userId, // Add the missing 'id' property
-            text: values.thread,
-            author: userId,
-            path: pathname,
-            imgPosts: values.imgPosts || '', // Add a check to handle undefined value
-        });
-
-        router.push("/");
-    };
     const handleImage = (e: ChangeEvent<HTMLInputElement>, fieldChange: (value: string) => void) => {
         e.preventDefault();
         const fileReader = new FileReader();
-
+        
         if (e.target.files && e.target.files.length > 0) {
             const file = e.target.files[0];
             setFiles(Array.from(e.target.files));
@@ -67,10 +60,32 @@ function PostThread({ userId }: Props) {
             }
             fileReader.readAsDataURL(file);
         }
-
+        
     }
+    
+    const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
+        const blob = values.imgPosts || '' ;
+        const hasImageChanged = isBase64Image(blob);
+        if (hasImageChanged) {
+            const imgRes = await startUpload(files);
 
+            if (imgRes && imgRes[0].fileUrl) {
+                values.imgPosts = imgRes[0].fileUrl;
+            }
+        }
 
+        
+        await createThread({
+            id: userId, // Add the missing 'id' property
+            text: values.thread,
+            author: userId,
+            path: pathname,
+            imgPosts: values.imgPosts || '', // Add a check to handle undefined value
+        });
+
+        router.push("/");
+    };
+    
     return (
         <Form {...form}>
             <form
@@ -98,9 +113,9 @@ function PostThread({ userId }: Props) {
                     render={({ field }) => (
                         <FormItem className='flex items-center gap-4'>
                             <FormLabel className='w-62 h-62 '>
-                                {field.value ? (
+                            {field.value || '' ? (
                                     <Image
-                                        src={field.value}
+                                        src={field.value || ''}
                                         alt='profile photo'
                                         width={1000}
                                         height={1000}

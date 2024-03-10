@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 import PostThread from "@/components/forms/PostThread";
 import { fetchUser } from "@/lib/actions/user.actions";
+import { fetchPosts } from "@/lib/actions/thread.actions";
 
 async function Page() {
     const user = await currentUser();
@@ -12,10 +13,14 @@ async function Page() {
     const userInfo = await fetchUser(user.id);
     if (!userInfo?.onboarded) redirect("/onboarding");
     const userId = userInfo._id.toString();
+    const result = await fetchPosts(1, 30);
+    
+    
+    
     return (
         <>
             <h1 className='head-text'>Create Thread</h1>
-            <PostThread userId={userId} />
+            <PostThread userId={userId} posts={result.posts[0].imgPosts}/>
         </>
     );
 }
