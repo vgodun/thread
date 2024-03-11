@@ -4,6 +4,7 @@ import LikesPosts from "../shared/LikesPosts";
 import ActionsPage from "@/app/(root)/thread/components/action";
 import ModalPost from "../shared/ModalPost";
 import { likePost } from "@/lib/actions/thread.actions";
+import { formatDateString } from "@/lib/utils";
 
 interface Props {
   id: string;
@@ -154,11 +155,23 @@ function ThreadCard({
             )}
           </Link>
         }
-
+        {
+          <Link href={`/likesUsers/${id}`} className="mt-3">
+            {likes.length === 0 ? null : (
+              <p className="mt-1 text-subtle-medium text-gray-1">
+                {likes.length} lik{likes.length > 1 ? "es" : "e"}
+              </p>
+            )}
+          </Link>
+        }
 
       </div>
 
-
+      <div className="py-3">
+        <p className='text-subtle-medium text-gray-1'>
+          {formatDateString(createdAt)}
+        </p>
+      </div>
     </article>
   );
 }
