@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Topbar from "@/components/shared/Topbar";
 import Bottombar from "@/components/shared/Bottombar";
 import LeftSidebar from "@/components/shared/LeftSidebar";
+import { WebsocketProvider } from '@/context/WebsocketContext';
 
 
 export const metadata = {
@@ -19,7 +20,8 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body>
+      <WebsocketProvider>
+        <body className={inter.className}>
           <Topbar />
           <main className='flex flex-row'>
             <LeftSidebar />
@@ -31,6 +33,7 @@ export default function RootLayout({
           </main>
           <Bottombar />
         </body>
+      </WebsocketProvider>
       </html>
     </ClerkProvider>
   )
