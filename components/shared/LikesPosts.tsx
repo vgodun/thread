@@ -8,7 +8,7 @@ import { useWebsocket } from "@/context/WebsocketContext";
 interface Props {
   threadId: string;
   userId: any;
-  likes: string[];
+  likes: any;
   name: any;
   username: any;
   imgUrl: any;
@@ -33,9 +33,7 @@ export default function LikesPosts({ threadId, userId, likes, name, username, im
     await likePost(threadId, userId, pathname, name, username, imgUrl);
     
    emit && emit('likes', {threadId, userId, name, username, imgUrl}); // Передати дані серверу);
-    
     router.refresh();
-    
   };
 
   const isLiked = likes.some((like: any) => like.id === userId);

@@ -30,8 +30,8 @@ const Page = async ({ params }: { params: { id: string } }) => {
                     author={thread?.author}
                     createdAt={thread.createdAt}
                     comments={thread?.children}
-                    likes={thread.likes}
                     name={userInfo?.name}
+                    likes={thread.likes}
                     username={userInfo?.username}
                     imgUrl={userInfo?.image || ''}
                     imgPosts={thread?.imgPosts}
@@ -57,8 +57,8 @@ const Page = async ({ params }: { params: { id: string } }) => {
                         author={childrenItem?.author}
                         createdAt={childrenItem.createdAt}
                         comments={childrenItem.children}
-                        likes={childrenItem.likes}
                         name={userInfo?.name}
+                        likes={childrenItem.likes}
                         username={userInfo?.username}
                         imgUrl={userInfo?.image || ''}
                         isComment

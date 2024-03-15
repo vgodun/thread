@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import LikesPosts from "../shared/LikesPosts";
-import { formatDateString } from "@/lib/utils";
 import ActionsPage from "@/app/(root)/thread/components/action";
 import ModalPost from "../shared/ModalPost";
+import { formatDateString } from "@/lib/utils";
 
 interface Props {
     id: string;
@@ -22,7 +22,7 @@ interface Props {
         };
     }[];
     isComment: boolean;
-    likes: string[];
+    likes: any;
     name?: any;
     username?: any;
     imgUrl?: any;

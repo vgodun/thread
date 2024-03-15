@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 
 interface Props {
     id: string;
-    likes: Array<any>;
+    likes: any;
 }
 
-export default function LikesUsers({ id, likes }: Props) {
+export default function LikesUsers({ id,likes }: Props) {
     const router = useRouter();
     return (
         <article className="user-card w-full">
