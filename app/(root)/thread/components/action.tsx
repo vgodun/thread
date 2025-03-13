@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { deleteThread } from "@/lib/actions/thread.actions";
 import { useState } from "react";
 import { AlertModal } from "@/components/modal/AlertModal";
+import { toast } from "react-hot-toast";
 
 interface Props {
     id: string;
@@ -24,22 +25,35 @@ const ActionsPage = ({ id, currentUserId, authorId, parentId, isComment }: Props
     const [loading, setLoading] = useState(false);
 
     if (currentUserId !== authorId) return null;
+    
     const onConfirm = async () => {
         try {
             setLoading(true);
-            await deleteThread(JSON.parse(JSON.stringify(id)), pathname);
+            
+            console.log(`Deleting thread with ID: ${id}`);
+            
+            // Call the deleteThread function
+            await deleteThread(id, pathname);
+            
+            // Show success message
+            toast.success('Post deleted successfully');
+            
+            // Navigate to home if it's a main thread (not a comment)
             if (!parentId || !isComment) {
                 router.push("/");
             }
-            //   toast.success('Post deleted.');
+            
+            // Refresh the current page to update the UI
             router.refresh();
-        } catch (error) {
-            //   toast.error('Make sure you removed all products using this category first.');
+        } catch (error: any) {
+            console.error("Error deleting thread:", error);
+            toast.error(`Failed to delete: ${error.message || 'Unknown error'}`);
         } finally {
             setOpen(false);
             setLoading(false);
         }
     };
+    
     return (
         <>
             <AlertModal
@@ -90,7 +104,6 @@ const ActionsPage = ({ id, currentUserId, authorId, parentId, isComment }: Props
                 </DropdownMenuContent>
             </DropdownMenu>
         </>
-
     )
 };
 

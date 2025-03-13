@@ -6,6 +6,7 @@ import {revalidatePath} from "next/cache";
 import Thread from "../models/thread.model";
 import { getJsPageSizeInKb } from "next/dist/build/utils";
 import { FilterQuery, SortOrder } from "mongoose";
+import { sanitizeDocument, sanitizeDocuments } from "../utils/sanitize";
 
 interface Params{
     userId:string,
@@ -81,7 +82,9 @@ export async function fetchUserPosts(userId:string){
               },
             ],
           });
-          return threads;
+          
+          // Sanitize the threads to prevent circular references
+          return sanitizeDocument(threads);
     } catch (error:any) {
         throw new Error(`Failed to fetch user posts: ${error.message}`);
     }
@@ -165,3 +168,141 @@ export async function getActivity(userId: string) {
       throw error;
     }
   }
+
+export async function getUserReplies(userId: string) {
+  connectToDB();
+  try {
+    // First, get the user's MongoDB _id from their Clerk id
+    const user = await User.findOne({ id: userId });
+    
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Find all threads where the user is the author and has a parentId (meaning it's a reply)
+    const userReplies = await Thread.find({
+      author: user._id, // Use the MongoDB _id instead of Clerk id
+      parentId: { $exists: true, $ne: null } // Only get threads that are replies (have a parentId)
+    }).populate({
+      path: "author",
+      model: User,
+      select: "name image id"
+    }).populate({
+      // Populate the parent thread to show what they replied to
+      path: "parentId",
+      model: Thread,
+      populate: {
+        path: "author",
+        model: User,
+        select: "name image id"
+      }
+    });
+
+    return userReplies;
+  } catch (error: any) {
+    console.error("Error fetching user replies: ", error);
+    throw new Error(`Failed to fetch user replies: ${error.message}`);
+  }
+}
+
+// Fetch threads where user is tagged
+export async function fetchUserTaggedThreads(userId: string) {
+  try {
+    connectToDB();
+
+    console.log("Fetching tagged threads for user ID:", userId);
+
+    // First check if the user exists
+    const user = await User.findOne({ id: userId });
+    if (!user) {
+      console.error("User not found with ID:", userId);
+      return [];
+    }
+    
+    console.log("Found user:", user.username);
+
+    // Create a regex pattern to match @username in the text
+    const mentionRegex = new RegExp(`@${user.username}\\b`, 'i');
+    
+    // Find threads that contain the mention pattern directly in the database
+    // Only select necessary fields and avoid nested population
+    const taggedThreads = await Thread.find({
+      text: mentionRegex
+    })
+    .select('_id text createdAt parentId imgPosts') // Only select necessary fields
+    .populate({
+      path: 'author',
+      model: User,
+      select: '_id id name image username' // Only select necessary user fields
+    })
+    .sort({ createdAt: -1 });
+    
+    console.log(`Found ${taggedThreads.length} threads where user is mentioned`);
+    
+    // Use the sanitization utility to prevent circular references
+    return sanitizeDocuments(taggedThreads);
+  } catch (error: any) {
+    console.error("Error fetching tagged threads:", error);
+    throw new Error(`Failed to fetch tagged threads: ${error.message}`);
+  }
+}
+
+// Function to tag users in a thread
+export async function tagUsersInThread(threadId: string, taggedUserIds: string[]) {
+  try {
+    connectToDB();
+
+    // Update the thread with the tagged users
+    await Thread.findByIdAndUpdate(threadId, {
+      $addToSet: { tags: { $each: taggedUserIds } }
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    console.error("Error tagging users:", error);
+    throw new Error(`Failed to tag users: ${error.message}`);
+  }
+}
+
+// Function to extract mentions from text
+export async function extractMentions(text: string) {
+  const mentionRegex = /@(\w+)/g;
+  const mentions = [];
+  let match;
+  
+  while ((match = mentionRegex.exec(text)) !== null) {
+    mentions.push(match[1]); // Push the username without the @ symbol
+  }
+  
+  return mentions;
+}
+
+// Find users by username
+export async function findUsersByUsername(usernames: string[]) {
+  try {
+    if (!usernames || usernames.length === 0) return [];
+    
+    connectToDB();
+    
+    console.log("Finding users by usernames:", usernames);
+    
+    const users = await User.find({
+      username: { $in: usernames.map(u => u.toLowerCase()) }
+    }).select('id username name image'); // Only select necessary fields
+    
+    // Ensure we're returning plain objects with only the necessary properties
+    const sanitizedUsers = users.map(user => ({
+      id: user.id,
+      username: user.username,
+      name: user.name,
+      image: user.image
+    }));
+    
+    console.log(`Found ${sanitizedUsers.length} users out of ${usernames.length} usernames`);
+    
+    return sanitizedUsers;
+  } catch (error: any) {
+    console.error("Error finding users by username:", error);
+    return [];
+  }
+}

@@ -28,7 +28,8 @@ const threadSchema = new mongoose.Schema({
       type: Object,
     },
   ],
-  imgPosts:String,
+  imgPosts: String,
+  tags: [String], // Store Clerk user IDs as strings
 });
 
 const Thread = mongoose.models.Thread || mongoose.model("Thread", threadSchema);

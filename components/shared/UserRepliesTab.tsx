@@ -12,7 +12,7 @@ interface Props {
     imgUrl: any;
 }
 
-const RepliesTab = async ({ currentUserId, accountId, accountType, name, username, imgUrl }: Props) => {
+const UserRepliesTab = async ({ currentUserId, accountId }: Props) => {
     try {
         const userReplies = await getUserReplies(accountId);
 
@@ -174,11 +174,11 @@ const RepliesTab = async ({ currentUserId, accountId, accountType, name, usernam
             </section>
         );
     } catch (error) {
-        console.error("Error in RepliesTab:", error);
+        console.error("Error in UserRepliesTab:", error);
         return (
             <p className="text-light-3 mt-5">Failed to load replies. Please try again later.</p>
         );
     }
 };
 
-export default RepliesTab;
+export default UserRepliesTab;
