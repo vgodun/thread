@@ -48,7 +48,6 @@ function PostThread({ userId }: Props) {
 
     const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
         await createThread({
-            id: userId, // Add the missing 'id' property
             text: values.thread,
             author: userId,
             path: pathname,
