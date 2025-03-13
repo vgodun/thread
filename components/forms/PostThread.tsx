@@ -47,7 +47,9 @@ function PostThread({ userId }: Props) {
     });
 
     const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
+        // Added id to ThreadParams interface to support user mentions and notifications
         await createThread({
+            id: userId,
             text: values.thread,
             author: userId,
             path: pathname,
@@ -253,4 +255,5 @@ function PostThread({ userId }: Props) {
     );
 }
 
+// Force a new deployment
 export default PostThread;

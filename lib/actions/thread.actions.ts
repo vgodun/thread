@@ -14,6 +14,7 @@ interface ThreadParams {
   author: string;
   path: string;
   imgPosts: string;
+  id?: string;
 }
 
 // Helper function to extract mentions from text
@@ -33,6 +34,7 @@ async function extractMentions(text: string) {
 }
 
 export async function createThread({
+  id,
   text,
   author,
   path,
