@@ -267,9 +267,10 @@ interface Params {
   text: string;
   imgPosts: string;
   path: string;
+  author?: string;
 }
 
-export async function updateThread({ id, text, imgPosts, path }: Params) {
+export async function updateThread({ id, text, imgPosts, path, author }: Params) {
   connectToDB();
   try {
     await Thread.findByIdAndUpdate(
@@ -277,6 +278,7 @@ export async function updateThread({ id, text, imgPosts, path }: Params) {
       {
         text: text,
         imgPosts: imgPosts,
+        author: author,
       }
     );
 

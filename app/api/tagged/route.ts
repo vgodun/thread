@@ -3,6 +3,9 @@ import Thread from "@/lib/models/thread.model";
 import User from "@/lib/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
+// Force dynamic rendering for this API route
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);

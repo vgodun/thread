@@ -6,6 +6,9 @@ import User from "@/lib/models/user.model";
 import Thread from "@/lib/models/thread.model";
 import { sanitizeDocuments } from "@/lib/utils/sanitize";
 
+// Force dynamic rendering for this API route
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     // Get the userId from the query parameters

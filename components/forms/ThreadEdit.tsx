@@ -75,6 +75,7 @@ const ThreadEdit = ({ thread, btnTitle }: Props) => {
             text: values.text,
             imgPosts: values.imgPosts || '',
             path: pathname,
+            author: '',
         });
         if (pathname === `/thread/edit/`) {
             router.back();

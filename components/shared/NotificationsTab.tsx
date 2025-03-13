@@ -5,6 +5,25 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import ThreadContent from "./ThreadContent";
 
+// Define the Notification interface based on your data structure
+interface Notification {
+  _id: string;
+  recipient: string;
+  sender: {
+    _id: string;
+    name: string;
+    username: string;
+    image: string;
+  };
+  type: "mention" | "like" | "comment" | "follow";
+  threadId?: {
+    _id: string;
+    text: string;
+  };
+  read: boolean;
+  createdAt: string;
+}
+
 interface Props {
   currentUserId: string;
   accountId: string;
@@ -24,7 +43,7 @@ const NotificationsTab = async ({ currentUserId, accountId }: Props) => {
         <p className="no-result">No notifications yet</p>
       ) : (
         <>
-          {notifications.map((notification) => {
+          {notifications.map((notification: Notification) => {
             // Determine notification content based on type
             let content = "";
             let linkHref = "";
